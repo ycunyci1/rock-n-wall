@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\SliderItemResource;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SubEssence;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductService implements ProductServiceInterface
@@ -27,6 +28,6 @@ class ProductService implements ProductServiceInterface
 
     public function getCategories(): Collection
     {
-        return Category::query()->take(15)->get();
+        return SubEssence::query()->where('essence_id', 2)->take(15)->get();
     }
 }

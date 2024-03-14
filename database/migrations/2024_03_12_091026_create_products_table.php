@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('vip');
-            $table->boolean('live');
+            $table->boolean('vip')->default(0);
+            $table->boolean('live')->default(0);
             $table->string('image');
+            $table->boolean('new')->default(0);
+            $table->boolean('popular')->default(0);
             $table->timestamps();
         });
     }

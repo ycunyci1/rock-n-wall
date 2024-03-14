@@ -2,27 +2,26 @@
 
 namespace Database\Factories;
 
+use App\Models\Essence;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SubEssence>
  */
-class CategoryFactory extends Factory
+class SubEssenceFactory extends Factory
 {
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
     public function definition(): array
     {
-        $randomProduct = Product::all()->random();
-
         return [
             'name' => fake()->text(6),
-            'image' => $randomProduct->image,
+            'main_product_id' => fake()->randomElement(Product::all()),
+            'essence_id' => fake()->randomElement(Essence::all()),
         ];
     }
 }

@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Product;
-use App\Models\Selection;
+use App\Models\SubEssence;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ProductSelectionSeeder extends Seeder
+class ProductSubEssenceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,13 +16,12 @@ class ProductSelectionSeeder extends Seeder
     public function run(): void
     {
         $productIds = Product::all()->pluck('id')->toArray();
-        $selectionIds = Selection::all()->pluck('id')->toArray();
-        for ($i = 1; $i <= 150; $i++) {
-            DB::table('product_selection')->insert([
+        $subEssenceIds = SubEssence::all()->pluck('id')->toArray();
+        for ($i = 1; $i <= 500; $i++) {
+            DB::table('product_sub_essence')->insert([
                 'product_id' => fake()->randomElement($productIds),
-                'selection_id' => fake()->randomElement($selectionIds),
+                'sub_essence_id' => fake()->randomElement($subEssenceIds),
             ]);
         }
-
     }
 }

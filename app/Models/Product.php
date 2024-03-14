@@ -13,16 +13,10 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public function categories(): BelongsToMany
+    public function subEssences(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(SubEssence::class);
     }
-
-    public function selections(): BelongsToMany
-    {
-        return $this->belongsToMany(Selection::class);
-    }
-
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoritable');

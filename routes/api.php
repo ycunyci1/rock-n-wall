@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/', [\App\Http\Controllers\ProductController::class, 'index']);
 Route::get('categories/paginate', [\App\Http\Controllers\CategoryController::class, 'paginate']);
+Route::get('categories/{subEssence}', [\App\Http\Controllers\CategoryController::class, 'showCategoryImages']);

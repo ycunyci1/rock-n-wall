@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\Selection;
+use App\Models\SubEssence;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,17 +13,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Selection::factory(10)->create();
+        $this->call(EssenceSeeder::class);
         Product::factory(300)->create();
-        Category::factory(30)->create();
-        $this->call(CategoryProductSeeder::class);
-        $this->call(ProductSelectionSeeder::class);
-
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        SubEssence::factory(200)->create();
+        $this->call(ProductSubEssenceSeeder::class);
     }
 }
