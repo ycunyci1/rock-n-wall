@@ -15,13 +15,9 @@ class ProductSubEssenceSeeder extends Seeder
      */
     public function run(): void
     {
-        $productIds = Product::all()->pluck('id')->toArray();
-        $subEssenceIds = SubEssence::all()->pluck('id')->toArray();
-        for ($i = 1; $i <= 500; $i++) {
-            DB::table('product_sub_essence')->insert([
-                'product_id' => fake()->randomElement($productIds),
-                'sub_essence_id' => fake()->randomElement($subEssenceIds),
-            ]);
+        $products = Product::all();
+        foreach ($products as $product) {
+            $product->subEssences()->attach(SubEssence::query()->inRandomOrder()->first());
         }
     }
 }

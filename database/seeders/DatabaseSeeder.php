@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(EssenceSeeder::class);
         Product::factory(300)->create();
-        SubEssence::factory(200)->create();
+        SubEssence::factory(50)->create();
         $this->call(ProductSubEssenceSeeder::class);
     }
 }
