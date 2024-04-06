@@ -9,7 +9,7 @@ use App\Models\Essence;
 use App\Models\SubEssence;
 use App\Services\SubEssenceService;
 
-class SubEssenceController extends Controller
+class SubEssenceController extends BaseApiController
 {
     public function show(Essence $essence, SubEssence $subEssence)
     {

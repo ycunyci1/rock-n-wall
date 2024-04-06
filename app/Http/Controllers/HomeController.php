@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ProductService;
 
-class HomeController extends Controller
+class HomeController extends BaseApiController
 {
     public function index()
     {

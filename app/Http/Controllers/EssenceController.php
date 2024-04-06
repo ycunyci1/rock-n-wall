@@ -8,7 +8,7 @@ use App\Http\Resources\SubEssenceShowResource;
 use App\Models\Essence;
 use App\Services\EssenceService;
 
-class   EssenceController extends Controller
+class   EssenceController extends BaseApiController
 {
     private $service;
 

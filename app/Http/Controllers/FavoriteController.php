@@ -8,7 +8,7 @@ use App\Models\SubEssence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
-class FavoriteController extends Controller
+class FavoriteController extends BaseApiController
 {
     /**
      * Display a listing of the resource.

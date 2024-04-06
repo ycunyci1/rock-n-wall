@@ -10,7 +10,7 @@ use App\Models\Product;
 use App\Services\FeedService;
 
 
-class FeedController extends Controller
+class FeedController extends BaseApiController
 {
     public function show(FeedRequest $request)
     {

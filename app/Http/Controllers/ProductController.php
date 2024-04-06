@@ -11,7 +11,7 @@ use App\Models\Product;
 use App\Models\SubEssence;
 use App\Services\ProductService;
 
-class ProductController extends Controller
+class ProductController extends BaseApiController
 {
     public function show(Essence $essence, SubEssence $subEssence, Product $product)
     {
