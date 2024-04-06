@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PaginateRequest;
+use App\Http\Resources\ProductDetailResource;
+use App\Http\Resources\ProductInfoResource;
+use App\Http\Resources\ProductResource;
+use App\Models\Essence;
 use App\Models\Product;
+use App\Models\SubEssence;
 use App\Services\ProductService;
-use App\Services\ProductServiceInterface;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function show(Essence $essence, SubEssence $subEssence, Product $product)
     {
-        $service = app(ProductServiceInterface::class);
-        $products = $service->getMainPageInfo();
-
-        return response()->json($products);
+        return response()->json([
+            'product' => ProductResource::make($product),
+            'info' => ProductInfoResource::make($product->subEssences),
+        ]);
     }
 }

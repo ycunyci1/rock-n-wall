@@ -2,22 +2,20 @@
 
 namespace App\Services;
 
-use App\Http\Resources\SliderItemResource;
-use App\Models\Category;
+use App\Http\Resources\MainPageEssenceResource;
+use App\Http\Resources\ProductResource;
+use App\Models\Essence;
 use App\Models\Product;
-use App\Models\SubEssence;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class ProductService implements ProductServiceInterface
+class ProductService
 {
     public function getMainPageInfo(): array
     {
-        $products = $this->getLiveImages();
-        $categories = $this->getCategories();
-
         return [
-            'liveImage' => SliderItemResource::collection($products),
-            'categories' => SliderItemResource::collection($categories),
+            'liveImage' => ProductResource::collection($this->getLiveImages()),
+            'essences' => $this->getEssences(),
         ];
     }
 
@@ -26,8 +24,8 @@ class ProductService implements ProductServiceInterface
         return Product::query()->where('live', 1)->take(15)->get();
     }
 
-    public function getCategories(): Collection
+    public function getEssences(): AnonymousResourceCollection
     {
-        return SubEssence::query()->where('essence_id', 2)->take(15)->get();
+        return MainPageEssenceResource::collection(Essence::with('subEssences.products', 'subEssences.mainProduct')->get());
     }
 }

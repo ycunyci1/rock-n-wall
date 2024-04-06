@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\SubEssence;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class SliderItemResource extends JsonResource
+class MainPageEssenceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,11 +18,7 @@ class SliderItemResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'vip' => boolval($this->vip),
-            'live' => boolval($this->live),
-            'image' => $this->image,
+            'subEssence' => SubEssenceResource::collection($this->subEssences),
         ];
     }
-
-
 }

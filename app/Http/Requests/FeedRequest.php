@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CategoryPaginateRequest extends FormRequest
+class FeedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,8 +23,7 @@ class CategoryPaginateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|exists:categories,id',
-            'need' => [Rule::in('prev', 'next'), 'required'],
+            'type' => [Rule::in('all', 'new', 'popular')],
         ];
     }
 }

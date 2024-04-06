@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\ProductServiceInterface;
-use Illuminate\Http\Request;
+use App\Services\ProductService;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $products = app(ProductServiceInterface::class)->getMainPageInfo();
-
-        return response()->json($products);
+        return response()->json(app(ProductService::class)->getMainPageInfo());
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('image');
             $table->boolean('new')->default(0);
             $table->boolean('popular')->default(0);
+            $table->unsignedBigInteger('sort')->default(500);
             $table->timestamps();
         });
     }

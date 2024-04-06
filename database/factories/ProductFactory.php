@@ -24,6 +24,7 @@ class ProductFactory extends Factory
             'image' => config('app.url') . '/storage/images/' . Str::random(5) . '.jpg',
             'new' => fake()->boolean(),
             'popular' => fake()->boolean(),
+            'sort' => rand(1, 10000)
         ];
     }
 }

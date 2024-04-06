@@ -24,6 +24,11 @@ class SubEssence extends Model
         return $this->belongsToMany(Product::class);
     }
 
+    public function mainProduct(): BelongsTo
+    {
+        return $this->belongsTo(Product::class, 'main_product_id', 'id');
+    }
+
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoritable');

@@ -22,6 +22,7 @@ class SubEssenceFactory extends Factory
             'name' => fake()->text(6),
             'main_product_id' => fake()->randomElement(Product::all()),
             'essence_id' => fake()->randomElement(Essence::all()),
+            'sort' => rand(1, 10000)
         ];
     }
 }
