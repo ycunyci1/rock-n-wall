@@ -2,66 +2,86 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Favorite;
 use App\Models\Product;
 use App\Models\SubEssence;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
+use App\Services\FavoriteService;
+use Illuminate\Support\Facades\Log;
 
 class FavoriteController extends BaseApiController
 {
+    private FavoriteService $service;
+
+    public function __construct(FavoriteService $service)
+    {
+        $this->service = $service;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return response()->json(app(FavoriteService::class)->getFavorites());
+        return response()->json(FavoriteService::getFavorites());
     }
 
     /**
      * Store a newlycreated resource in storage.
      */
-    public function productCreate(Product $product)
+    public function storeProduct(Product $product)
     {
-        Favorite::create([
-            'user_id'           => auth()->user()->id,
-            'favoritable_id'    => $product->id,
-            'favoritable_type'  => 'App\Models\Product',
-            'created_at'        => Carbon::now()
-        ]);
+        try {
+            $this->service->addToFavorite(Product::class, $product->id);
+        } catch (\Exception $exception) {
+            Log::error('Ошибка добавления товара в избранное: ' . $exception->getMessage());
+            return $this->responseJson([
+                'message' => 'Произошла ошибка, попробуйте повторить попытку позже'
+            ], 400);
+        }
+
+        return $this->responseJson(['message' => 'Успешно добавлено']);
     }
 
-    public function subEssenceCreate(SubEssence $subEssence)
+    public function storeSubEssence(SubEssence $subEssence)
     {
-        Favorite::create([
-            'user_id'           => auth()->user()->id,
-            'favoritable_id'    => $subEssence->id,
-            'favoritable_type'  => 'App\Models\SubEssence',
-            'created_at'        => Carbon::now()
-        ]);
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        try {
+            $this->service->addToFavorite(SubEssence::class, $subEssence->id);
+        } catch (\Exception $exception) {
+            Log::error('Ошибка добавления категории в избранное: ' . $exception->getMessage());
+            return $this->responseJson([
+                'message' => 'Произошла ошибка, попробуйте повторить попытку позже'
+            ], 400);
+        }
+        return $this->responseJson(['message' => 'Успешно добавлено']);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroyProduct(Product $product)
     {
-        //
+        try {
+            $this->service->deleteFromFavorite(Product::class, $product->id);
+        } catch (\Exception $exception) {
+            Log::error('Ошибка удаления товара из избранного: ' . $exception->getMessage());
+            return $this->responseJson([
+                'message' => 'Произошла ошибка, попробуйте повторить попытку позже'
+            ], 400);
+        }
+
+        return $this->responseJson(['message' => 'Успешно удалено']);
+    }
+
+    public function destroySubEssence(SubEssence $subEssence)
+    {
+        try {
+            $this->service->deleteFromFavorite(SubEssence::class, $subEssence->id);
+        } catch (\Exception $exception) {
+            Log::error('Ошибка удаления категории из избранного: ' . $exception->getMessage());
+            return $this->responseJson([
+                'message' => 'Произошла ошибка, попробуйте повторить попытку позже'
+            ], 400);
+        }
+
+        return $this->responseJson(['message' => 'Успешно удалено']);
     }
 }

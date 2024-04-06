@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('role_users', function (Blueprint $table) {
-            $table->unsignedBigInteger('user_id');
+        Schema::create('admin_role', function (Blueprint $table) {
+            $table->unsignedBigInteger('admin_id');
             $table->unsignedInteger('role_id');
-            $table->primary(['user_id', 'role_id']);
-            $table->foreign('user_id')
+            $table->primary(['admin_id', 'role_id']);
+            $table->foreign('admin_id')
                 ->references('id')
-                ->on('users')
+                ->on('admins')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreign('role_id')
                 ->references('id')
-                ->on('roles')
+                ->on('admin_roles')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
