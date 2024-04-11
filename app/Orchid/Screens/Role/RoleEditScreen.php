@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\Role;
 
+use App\Models\AdminRole;
 use App\Orchid\Layouts\Role\RoleEditLayout;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class RoleEditScreen extends Screen
      *
      * @return array
      */
-    public function query(Role $role): iterable
+    public function query(AdminRole $role): iterable
     {
         return [
             'role'       => $role,
@@ -103,12 +104,12 @@ class RoleEditScreen extends Screen
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save(Request $request, Role $role)
+    public function save(Request $request, AdminRole $role)
     {
         $request->validate([
             'role.slug' => [
                 'required',
-                Rule::unique(Role::class, 'slug')->ignore($role),
+                Rule::unique(AdminRole::class, 'slug')->ignore($role),
             ],
         ]);
 
@@ -131,7 +132,7 @@ class RoleEditScreen extends Screen
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function remove(Role $role)
+    public function remove(AdminRole $role)
     {
         $role->delete();
 

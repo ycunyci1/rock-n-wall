@@ -38,8 +38,8 @@ class SubEssenceListLayout extends Table
             TD::make('main_product_id', 'Основное изображение')
                 ->width(50)
                 ->render(function (SubEssence $subEssence) {
-                    return Link::make($subEssence->mainProduct->image)
-                        ->route('platform.subEssence.edit', $subEssence);
+                    $link = route('platform.subEssence.edit', $subEssence);
+                    return "<a href=$link><img src={$subEssence->mainProduct->image} width='150' height='150'></a>";
                 }),
             TD::make('essence_id', 'Раздел')
                 ->width(50)

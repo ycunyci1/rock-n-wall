@@ -39,7 +39,7 @@ class ProductEditLayout extends Rows
                 ->sendTrueOrFalse(),
 
             CheckBox::make('product.live')
-                ->title('Анимация')
+                ->title('Live')
                 ->sendTrueOrFalse(),
 
             Picture::make('product.image')
@@ -55,6 +55,7 @@ class ProductEditLayout extends Rows
 
             Input::make('product.sort')
                 ->title('Сортировка')
+                ->help('Чем меньше число - тем выше изображение в списке')
                 ->type('number'),
 
             Select::make('subEssences.')

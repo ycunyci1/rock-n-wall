@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
+use App\Models\Admin;
 use App\Orchid\Layouts\Role\RolePermissionLayout;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserPasswordLayout;
@@ -24,22 +25,22 @@ use Orchid\Support\Facades\Toast;
 class UserEditScreen extends Screen
 {
     /**
-     * @var User
+     * @var Admin
      */
-    public $user;
+    public $admin;
 
     /**
      * Fetch data to be displayed on the screen.
      *
      * @return array
      */
-    public function query(User $user): iterable
+    public function query(Admin $admin): iterable
     {
-        $user->load(['roles']);
+        $admin->load(['roles']);
 
         return [
-            'user'       => $user,
-            'permission' => $user->getStatusPermission(),
+            'admin'       => $admin,
+            'permission' => $admin->getStatusPermission(),
         ];
     }
 
@@ -48,7 +49,7 @@ class UserEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->user->exists ? 'Edit User' : 'Create User';
+        return $this->admin->exists ? 'Edit Admin' : 'Create Admin';
     }
 
     /**
@@ -56,13 +57,12 @@ class UserEditScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'User profile and privileges, including their associated role.';
+        return '';
     }
 
     public function permission(): ?iterable
     {
         return [
-            'platform.systems.users',
         ];
     }
 
@@ -78,13 +78,13 @@ class UserEditScreen extends Screen
                 ->icon('bg.box-arrow-in-right')
                 ->confirm(__('You can revert to your original state by logging out.'))
                 ->method('loginAs')
-                ->canSee($this->user->exists && $this->user->id !== \request()->user()->id),
+                ->canSee($this->admin->exists && $this->admin->id !== \request()->user()->id),
 
             Button::make(__('Remove'))
                 ->icon('bs.trash3')
                 ->confirm(__('Once the account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.'))
                 ->method('remove')
-                ->canSee($this->user->exists),
+                ->canSee($this->admin->exists),
 
             Button::make(__('Save'))
                 ->icon('bs.check-circle')
@@ -106,7 +106,7 @@ class UserEditScreen extends Screen
                     Button::make(__('Save'))
                         ->type(Color::BASIC)
                         ->icon('bs.check-circle')
-                        ->canSee($this->user->exists)
+                        ->canSee($this->admin->exists)
                         ->method('save')
                 ),
 
@@ -117,7 +117,7 @@ class UserEditScreen extends Screen
                     Button::make(__('Save'))
                         ->type(Color::BASIC)
                         ->icon('bs.check-circle')
-                        ->canSee($this->user->exists)
+                        ->canSee($this->admin->exists)
                         ->method('save')
                 ),
 
@@ -128,7 +128,7 @@ class UserEditScreen extends Screen
                     Button::make(__('Save'))
                         ->type(Color::BASIC)
                         ->icon('bs.check-circle')
-                        ->canSee($this->user->exists)
+                        ->canSee($this->admin->exists)
                         ->method('save')
                 ),
 
@@ -139,7 +139,7 @@ class UserEditScreen extends Screen
                     Button::make(__('Save'))
                         ->type(Color::BASIC)
                         ->icon('bs.check-circle')
-                        ->canSee($this->user->exists)
+                        ->canSee($this->admin->exists)
                         ->method('save')
                 ),
 
@@ -149,12 +149,12 @@ class UserEditScreen extends Screen
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function save(User $user, Request $request)
+    public function save(Admin $admin, Request $request)
     {
         $request->validate([
-            'user.email' => [
+            'admin.email' => [
                 'required',
-                Rule::unique(User::class, 'email')->ignore($user),
+                Rule::unique(Admin::class, 'email')->ignore($admin),
             ],
         ]);
 
@@ -163,20 +163,20 @@ class UserEditScreen extends Screen
             ->collapse()
             ->toArray();
 
-        $user->when($request->filled('user.password'), function (Builder $builder) use ($request) {
-            $builder->getModel()->password = Hash::make($request->input('user.password'));
+        $admin->when($request->filled('admin.password'), function (Builder $builder) use ($request) {
+            $builder->getModel()->password = Hash::make($request->input('admin.password'));
         });
 
-        $user
-            ->fill($request->collect('user')->except(['password', 'permissions', 'roles'])->toArray())
+        $admin
+            ->fill($request->collect('admin')->except(['password', 'permissions', 'roles'])->toArray())
             ->forceFill(['permissions' => $permissions])
             ->save();
 
-        $user->replaceRoles($request->input('user.roles'));
+        $admin->replaceRoles($request->input('admin.roles'));
 
-        Toast::info(__('User was saved.'));
+        Toast::info(__('Admin was saved.'));
 
-        return redirect()->route('platform.systems.users');
+        return redirect()->route('platform.systems.admins');
     }
 
     /**
@@ -184,23 +184,23 @@ class UserEditScreen extends Screen
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function remove(User $user)
+    public function remove(Admin $admin)
     {
-        $user->delete();
+        $admin->delete();
 
-        Toast::info(__('User was removed'));
+        Toast::info(__('Admin was removed'));
 
-        return redirect()->route('platform.systems.users');
+        return redirect()->route('platform.systems.admins');
     }
 
     /**
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function loginAs(User $user)
+    public function loginAs(Admin $admin)
     {
-        Impersonation::loginAs($user);
+        Impersonation::loginAs($admin);
 
-        Toast::info(__('You are now impersonating this user'));
+        Toast::info(__('You are now impersonating this admin'));
 
         return redirect()->route(config('platform.index'));
     }

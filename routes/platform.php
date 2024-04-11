@@ -101,29 +101,29 @@ Route::screen('profile', UserProfileScreen::class)
         ->parent('platform.index')
         ->push(__('Profile'), route('platform.profile')));
 
-// Platform > System > Users > User
-Route::screen('users/{user}/edit', UserEditScreen::class)
-    ->name('platform.systems.users.edit')
+// Platform > System > Admins > User
+Route::screen('admins/{admin}/edit', UserEditScreen::class)
+    ->name('platform.systems.admins.edit')
     ->breadcrumbs(fn (Trail $trail, $user) => $trail
-        ->parent('platform.systems.users')
-        ->push($user->name, route('platform.systems.users.edit', $user)));
+        ->parent('platform.systems.admins')
+        ->push($user->name, route('platform.systems.admins.edit', $user)));
 
 // Platform > System > Users > Create
-Route::screen('users/create', UserEditScreen::class)
-    ->name('platform.systems.users.create')
+Route::screen('admin/create', UserEditScreen::class)
+    ->name('platform.systems.admins.create')
     ->breadcrumbs(fn (Trail $trail) => $trail
-        ->parent('platform.systems.users')
-        ->push(__('Create'), route('platform.systems.users.create')));
+        ->parent('platform.systems.admins')
+        ->push(__('Create'), route('platform.systems.admins.create')));
 
 // Platform > System > Users
-Route::screen('users', UserListScreen::class)
-    ->name('platform.systems.users')
+Route::screen('admins', UserListScreen::class)
+    ->name('platform.systems.admins')
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.index')
-        ->push(__('Users'), route('platform.systems.users')));
+        ->push(__('Users'), route('platform.systems.admins')));
 
 // Platform > System > Roles > Role
-Route::screen('roles/{role}/edit', RoleEditScreen::class)
+Route::screen('admin/{role}/edit', RoleEditScreen::class)
     ->name('platform.systems.roles.edit')
     ->breadcrumbs(fn (Trail $trail, $role) => $trail
         ->parent('platform.systems.roles')

@@ -21,7 +21,7 @@ class ProductFactory extends Factory
             'name' => fake()->text(5),
             'vip' => fake()->boolean(),
             'live' => fake()->boolean(),
-            'image' => config('app.url') . '/storage/images/' . Str::random(5) . '.jpg',
+            'image' => fake()->imageUrl,
             'new' => fake()->boolean(),
             'popular' => fake()->boolean(),
             'sort' => rand(1, 10000)

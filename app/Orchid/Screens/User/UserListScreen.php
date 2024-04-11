@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
+use App\Models\Admin;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserFiltersLayout;
 use App\Orchid\Layouts\User\UserListLayout;
@@ -25,9 +26,7 @@ class UserListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'users' => User::with('roles')
-                ->filters(UserFiltersLayout::class)
-                ->defaultSort('id', 'desc')
+            'admins' => Admin::with('roles')
                 ->paginate(),
         ];
     }
@@ -37,7 +36,7 @@ class UserListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'User Management';
+        return 'Администраторы';
     }
 
     /**
@@ -45,13 +44,13 @@ class UserListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'A comprehensive list of all registered users, including their profiles and privileges.';
+        return '';
     }
 
     public function permission(): ?iterable
     {
         return [
-            'platform.systems.users',
+
         ];
     }
 
@@ -65,7 +64,7 @@ class UserListScreen extends Screen
         return [
             Link::make(__('Add'))
                 ->icon('bs.plus-circle')
-                ->route('platform.systems.users.create'),
+                ->route('platform.systems.admins.create'),
         ];
     }
 
@@ -77,11 +76,7 @@ class UserListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            UserFiltersLayout::class,
             UserListLayout::class,
-
-            Layout::modal('asyncEditUserModal', UserEditLayout::class)
-                ->async('asyncGetUser'),
         ];
     }
 

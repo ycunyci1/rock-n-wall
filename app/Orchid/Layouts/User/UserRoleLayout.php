@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid\Layouts\User;
 
-use Orchid\Platform\Models\Role;
+use App\Models\AdminRole;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
@@ -19,8 +19,8 @@ class UserRoleLayout extends Rows
     public function fields(): array
     {
         return [
-            Select::make('user.roles.')
-                ->fromModel(Role::class, 'name')
+            Select::make('admin.roles.')
+                ->fromModel(AdminRole::class, 'name')
                 ->multiple()
                 ->title(__('Name role'))
                 ->help('Specify which groups this account should belong to'),

@@ -33,6 +33,7 @@ class RoleEditLayout extends Rows
                 ->title(__('Slug'))
                 ->placeholder(__('Slug'))
                 ->help(__('Actual name in the system')),
+
         ];
     }
 }

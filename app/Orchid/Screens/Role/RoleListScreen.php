@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\Role;
 
+use App\Models\Admin;
+use App\Models\AdminRole;
 use App\Orchid\Layouts\Role\RoleListLayout;
-use Orchid\Platform\Models\Role;
+use Illuminate\Http\Request;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Toast;
 
 class RoleListScreen extends Screen
 {
@@ -20,7 +23,7 @@ class RoleListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'roles' => Role::filters()->defaultSort('id', 'desc')->paginate(),
+            'roles' => AdminRole::paginate(),
         ];
     }
 
@@ -29,7 +32,7 @@ class RoleListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Role Management';
+        return 'Роли';
     }
 
     /**
@@ -37,7 +40,7 @@ class RoleListScreen extends Screen
      */
     public function description(): ?string
     {
-        return 'A comprehensive list of all roles, including their permissions and associated users.';
+        return '';
     }
 
     public function permission(): ?iterable
@@ -71,5 +74,11 @@ class RoleListScreen extends Screen
         return [
             RoleListLayout::class,
         ];
+    }
+
+    public function remove(Request $request)
+    {
+        AdminRole::where('id', $request->id)->delete();
+        Toast::info('Role was deleted');
     }
 }

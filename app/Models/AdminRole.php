@@ -8,9 +8,9 @@ use Orchid\Platform\Models\Role as OrchidRole;
 
 class AdminRole extends OrchidRole
 {
-    use HasFactory;
-
     protected $table = 'admin_roles';
+
+    use HasFactory;
 
     public function roles(): BelongsToMany
     {

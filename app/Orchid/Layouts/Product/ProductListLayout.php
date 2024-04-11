@@ -39,7 +39,7 @@ class ProductListLayout extends Table
                     return Link::make($product->vip ? 'Да' : 'Нет')
                         ->route('platform.product.edit', $product);
                 }),
-            TD::make('live', 'Анимация')
+            TD::make('live', 'Live')
                 ->width(50)
                 ->render(function (Product $product) {
                     return Link::make($product->live ? 'Да' : 'Нет')
