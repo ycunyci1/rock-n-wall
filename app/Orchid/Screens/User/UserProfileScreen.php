@@ -29,7 +29,7 @@ class UserProfileScreen extends Screen
     public function query(Request $request): iterable
     {
         return [
-            'user' => $request->user(),
+            'admin' => $request->user(),
         ];
     }
 
