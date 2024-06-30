@@ -26,8 +26,6 @@ services:
   db:
     image: mysql:latest
     restart: always
-    volumes:
-      - ./docker/mysql/data:/var/lib/mysql
     environment:
       MYSQL_DATABASE: wall
       MYSQL_ROOT_PASSWORD: root
