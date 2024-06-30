@@ -23,7 +23,7 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'searchTerm' => 'string',
+            'query' => 'string',
         ];
     }
 }

@@ -10,10 +10,9 @@ class FeedService
     {
         $productsQuery = Product::query()->orderBy('sort')->orderBy('id');
         return match ($data['type']) {
-            'all' => $productsQuery->get(),
-            'popular' => $productsQuery->where('popular', 1)->get(),
-            'new' => $productsQuery->where('new', 1)->get(),
-            default => throw new \Exception('Unexpected value'),
+            'popular' => $productsQuery->where('popular', 1)->take(15)->get(),
+            'new' => $productsQuery->where('new', 1)->take(15)->get(),
+            default => $productsQuery->take(15)->get(),
         };
     }
 
@@ -21,8 +20,16 @@ class FeedService
     {
         $id = $data['id'];
         $lastProduct = Product::find($id);
+
+        $productBaseRequest = Product::query()->orderBy('sort')->orderBy('id');
+        $productRequest = match ($data['type']) {
+            'popular' => $productBaseRequest->where('popular', 1),
+            'new' => $productBaseRequest->where('new', 1),
+            default => $productBaseRequest
+        };
+
         if ($data['need'] == 'next') {
-            return Product::where(function ($query) use ($lastProduct) {
+            return $productRequest->where(function ($query) use ($lastProduct) {
                 $query->where('sort', '>', $lastProduct->sort)
                     ->orWhere(function ($query) use ($lastProduct) {
                         $query->where('sort', '=', $lastProduct->sort)
@@ -34,7 +41,7 @@ class FeedService
                 ->take(15)
                 ->get();
         } else {
-            return Product::where(function ($query) use ($lastProduct) {
+            return $productRequest->where(function ($query) use ($lastProduct) {
                 $query->where('sort', '<', $lastProduct->sort)
                     ->orWhere(function ($query) use ($lastProduct) {
                         $query->where('sort', '=', $lastProduct->sort)

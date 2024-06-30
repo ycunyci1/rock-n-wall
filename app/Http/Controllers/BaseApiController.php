@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class BaseApiController extends Controller
 {
-    public function responseJson(array $response = [], $status = 200)
+    public function responseJson(mixed $response = [], $status = 200)
     {
         return response()->json($response, $status);
     }

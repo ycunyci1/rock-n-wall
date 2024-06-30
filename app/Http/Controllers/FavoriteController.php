@@ -24,9 +24,6 @@ class FavoriteController extends BaseApiController
         return response()->json(FavoriteService::getFavorites());
     }
 
-    /**
-     * Store a newlycreated resource in storage.
-     */
     public function storeProduct(Product $product)
     {
         try {

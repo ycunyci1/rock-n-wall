@@ -8,9 +8,9 @@ use App\Http\Resources\SubEssenceShowResource;
 use App\Models\Essence;
 use App\Services\EssenceService;
 
-class   EssenceController extends BaseApiController
+class EssenceController extends BaseApiController
 {
-    private $service;
+    private EssenceService $service;
 
     public function __construct(EssenceService $categoryService)
     {
@@ -19,14 +19,14 @@ class   EssenceController extends BaseApiController
 
     public function show(Essence $essence)
     {
-        return response()->json(SubEssenceResource::collection($essence->subEssences));
+        return response()->json(SubEssenceResource::collection($essence->subEssences()->orderBy('sort')->orderBy('id')->take(15)->get()));
     }
 
     public function paginate(PaginateRequest $request, Essence $essence)
     {
         $data = $request->validated();
-        $subEssences = app(EssenceService::class)->paginate($data, $essence);
+        $subEssences = $this->service->paginate($data, $essence);
 
-        return response()->json(SubEssenceShowResource::collection($subEssences));
+        return response()->json(SubEssenceResource::collection($subEssences));
     }
 }

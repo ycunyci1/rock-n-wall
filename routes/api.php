@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,13 +15,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-//todo: Временные методы до интеграции с мобильным разработчиком
+//todo: Временный метод до интеграции с мобильным разработчиком
 Route::get('login', [\App\Http\Controllers\TempController::class, 'login'])->name('login');
 
 Route::group(['middleware' => 'auth:api'], function () {
@@ -29,17 +24,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('feed/paginate', [\App\Http\Controllers\FeedController::class, 'paginate']);
     Route::get('search', [\App\Http\Controllers\FeedController::class, 'search']);
 
-
-    Route::get('essences/paginate', [\App\Http\Controllers\EssenceController::class, 'paginate']);
     Route::get('essences/{essence}', [\App\Http\Controllers\EssenceController::class, 'show']);
-    Route::get('essences/{essence}/sub-essences/paginate', [\App\Http\Controllers\SubEssenceController::class, 'paginate']);
+    Route::get('essences/{essence}/paginate', [\App\Http\Controllers\EssenceController::class, 'paginate']);
     Route::get('essences/{essence}/sub-essences/{subEssence}', [\App\Http\Controllers\SubEssenceController::class, 'show']);
-    Route::get('essences/{essence}/sub-essences/{subEssence}/paginate', [\App\Http\Controllers\ProductController::class, 'paginate']);
-    Route::get('essences/{essence}/sub-essences/{subEssence}/{product}', [\App\Http\Controllers\ProductController::class, 'show']);
-
-
-    Route::get('categories/paginate', [\App\Http\Controllers\EssenceController::class, 'paginate']);
-
+    Route::get('essences/{essence}/sub-essences/{subEssence}/paginate', [\App\Http\Controllers\SubEssenceController::class, 'paginate']);
+    Route::get('essences/{essence}/sub-essences/{subEssence}/products/{product}', [\App\Http\Controllers\ProductController::class, 'show']);
 
     Route::prefix('favorites')->group(function () {
         Route::get('', [FavoriteController::class, 'index']);
@@ -48,4 +37,6 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::delete('products/{product}', [FavoriteController::class, 'destroyProduct']);
         Route::delete('sub-essences/{subEssence}', [FavoriteController::class, 'destroySubEssence']);
     });
+
+    Route::get('user-info', [UserController::class, 'index']);
 });

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
+            $table->boolean('auto_changer_enabled')->default(false);
             $table->string('password');
             $table->boolean('vip')->default(0);
             $table->timestamps();

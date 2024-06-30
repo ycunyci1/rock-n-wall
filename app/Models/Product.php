@@ -31,6 +31,6 @@ class Product extends Model
 
     public function autochangers(): BelongsToMany
     {
-        return $this->belongsToMany(Autochanger::class);
+        return $this->belongsToMany(AutoChanger::class);
     }
 }

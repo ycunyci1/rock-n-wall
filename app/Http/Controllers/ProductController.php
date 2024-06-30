@@ -17,7 +17,7 @@ class ProductController extends BaseApiController
     {
         return response()->json([
             'product' => ProductResource::make($product),
-            'info' => ProductInfoResource::make($product->subEssences),
+            'info' => ProductInfoResource::collection($product->subEssences),
         ]);
     }
 }

@@ -26,6 +26,9 @@ class FeedController extends BaseApiController
     public function paginate(PaginateRequest $request)
     {
         $data = $request->validated();
+        if(!isset($data['type'])) {
+            $data['type'] = 'all';
+        }
         $products = app(FeedService::class)->paginate($data);
 
         return response()->json(ProductResource::collection($products));
@@ -34,9 +37,10 @@ class FeedController extends BaseApiController
     public function search(SearchRequest $request)
     {
         $data = $request->validated();
-        $searchTerm = $data['searchTerm'];
+        $searchTerm = $data['query'];
         // todo: Вынести в сервис
-        $result = Product::query()->where('name', 'LIKE', "%$searchTerm%")
+        $result = Product::query()
+            ->where('name', 'LIKE', "%$searchTerm%")
             ->orWhereHas('tags', fn ($query)
             => $query->where('name', 'LIKE', "%$searchTerm%")
             )->get();

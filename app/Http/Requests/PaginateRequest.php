@@ -25,6 +25,7 @@ class PaginateRequest extends FormRequest
         return [
             'id' => 'required',
             'need' => [Rule::in('prev', 'next'), 'required'],
+            'type' => [Rule::in('all', 'new', 'popular')],
         ];
     }
 }

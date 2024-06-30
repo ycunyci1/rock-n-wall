@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\SubEssenceResource;
+use App\Http\Resources\SubEssenceShowResource;
 use App\Models\Essence;
 use App\Models\Favorite;
 use App\Models\Product;
@@ -15,7 +16,7 @@ class FavoriteService
     {
         $user = auth()->user();
 
-        $favorites = $user->favorites->load('favoritable');
+        $favorites = $user->favorites;
 
         $productsCollect = collect();
         $subEssencesCollect = collect();
@@ -37,11 +38,10 @@ class FavoriteService
             $subEssencesData[$essences->where('id', $essenceId)->first()->name] = SubEssenceResource::collection($subEssences);
         }
 
-        $allProducts = [
-            'all' => ProductResource::collection($productsCollect)
+        return [
+            'all' => ProductResource::collection($productsCollect),
+            'essences' => $subEssencesData
         ];
-
-        return array_merge($allProducts, $subEssencesData);
     }
 
     public function addToFavorite(string $model, int $id): void
