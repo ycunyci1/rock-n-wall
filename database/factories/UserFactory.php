@@ -11,10 +11,6 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
-    protected static ?string $password;
 
     /**
      * Define the model's default state.
@@ -24,10 +20,10 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => 'ycunyci@mail.ru',
-            'password' => Hash::make('123qweasd'),
-            'name' => 'Pavel',
+            'email' => fake()->email,
+            'name' => fake()->name,
             'vip' => fake()->boolean(),
+            'token' => Str::random(12)
         ];
     }
 
