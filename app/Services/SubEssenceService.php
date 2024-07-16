@@ -19,7 +19,7 @@ class SubEssenceService
                 ->orderBy('id')
                 ->where('sort', '>', $sort)
                 ->take(15)
-                ->get();
+                ->get()->values();
         } else {
             return $subEssence->products()
                 ->where('sort', '<', $sort)
@@ -30,7 +30,7 @@ class SubEssenceService
                 ->sortBy([
                     ['sort', 'asc'],
                     ['id', 'asc'],
-                ]);
+                ])->values();
         }
     }
 }

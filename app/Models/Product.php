@@ -19,6 +19,7 @@ class Product extends Model
     {
         return $this->belongsToMany(SubEssence::class);
     }
+
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoritable');
