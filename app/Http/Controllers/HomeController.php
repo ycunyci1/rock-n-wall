@@ -16,9 +16,11 @@ class HomeController extends BaseApiController
      *     path="/api/v1/main",
      *     summary="Получить данные для главной страницы",
      *     tags={"Pages"},
+     *
      *     @OA\Response(
      *          response=200,
      *          description="Данные для главной страницы",
+     *
      *          @OA\JsonContent(
      *              ref="#/components/schemas/MainPageData"
      *          )
@@ -29,7 +31,6 @@ class HomeController extends BaseApiController
      * )
      *
      * @return JsonResponse
-     *
      */
     public function index()
     {

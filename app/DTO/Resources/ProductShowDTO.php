@@ -14,7 +14,6 @@ use Spatie\LaravelData\Data;
 class ProductShowDTO extends Data
 {
     /**
-     * @var ProductDTO
      * @OA\Property (
      *     ref="#/components/schemas/Product"
      * )
@@ -23,8 +22,10 @@ class ProductShowDTO extends Data
 
     /**
      * @var array
+     *
      * @OA\Property (
      *     format="array",
+     *
      *     @OA\Items(ref="#/components/schemas/ProductInfoDialog")
      * )
      */

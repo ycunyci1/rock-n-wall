@@ -16,8 +16,10 @@ class MainPageDTO extends Data
 {
     /**
      * @var array
+     *
      * @OA\Property (
      *     format="array",
+     *
      *     @OA\Items(ref="#/components/schemas/Product")
      * )
      */
@@ -26,8 +28,10 @@ class MainPageDTO extends Data
 
     /**
      * @var array
+     *
      * @OA\Property (
      *     format="array",
+     *
      *     @OA\Items(ref="#/components/schemas/MainPageEssence")
      * )
      */
@@ -35,14 +39,13 @@ class MainPageDTO extends Data
     public iterable $essences;
 
     /**
-     * @param DataCollection $liveImages
-     * @param DataCollection $essences
+     * @param  DataCollection  $liveImages
+     * @param  DataCollection  $essences
      */
     public function __construct(
         iterable $liveImages,
         iterable $essences
-    )
-    {
+    ) {
         $this->liveImages = $liveImages;
         $this->essences = $essences;
     }

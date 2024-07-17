@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
+use App\DTO\Resources\FavoriteEssenceDTO;
 use App\Http\Resources\ProductResource;
-use App\Http\Resources\SubEssenceResource;
-use App\Http\Resources\SubEssenceShowResource;
 use App\Models\Essence;
 use App\Models\Favorite;
 use App\Models\Product;
@@ -31,16 +30,16 @@ class FavoriteService
             $subEssencesCollect->push($subEssence->favoritable);
         }
         $groupedSubEssencesByEssenceId = $subEssencesCollect->groupBy('essence_id');
-        $subEssencesData = [];
         $essences = Essence::all();
-
+        $essencesData = [];
         foreach ($groupedSubEssencesByEssenceId as $essenceId => $subEssences) {
-            $subEssencesData[$essences->where('id', $essenceId)->first()->name] = SubEssenceResource::collection($subEssences);
+            $essence = $essences->where('id', $essenceId)->first();
+            $essencesData[] = FavoriteEssenceDTO::from($essence, ['subEssences' => $subEssences]);
         }
 
         return [
             'all' => ProductResource::collection($productsCollect),
-            'essences' => $subEssencesData
+            'essences' => $essencesData,
         ];
     }
 
@@ -58,8 +57,7 @@ class FavoriteService
         Favorite::query()->where([
             'user_id' => auth()->id(),
             'favoritable_id' => $id,
-            'favoritable_type' => $model
+            'favoritable_type' => $model,
         ])->first()?->delete();
     }
 }
-

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 /**
  * @OA\Info(
  *      version="1.0.0",
@@ -15,12 +13,14 @@ use Illuminate\Http\Request;
  *     name="Pages",
  *     description="Информация для отдельных страниц"
  * )
- *
+ * @OA\Tag(
+ *     name="Favorite",
+ *     description="Маршруты для избранного"
+ * )
  * @OA\Tag(
  *     name="Paginate",
  *     description="Пагинация"
  * )
- *
  * @OA\Tag(
  *     name="Other",
  *     description="Остальное"
@@ -30,6 +30,7 @@ use Illuminate\Http\Request;
  *      url="http://5.35.83.190",
  *      description="Debug test server"
  * )
+ *
  * @OA\SecurityScheme(
  *     type="apiKey",
  *     in="header",

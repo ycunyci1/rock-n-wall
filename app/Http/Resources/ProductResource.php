@@ -22,6 +22,4 @@ class ProductResource extends JsonResource
             'image' => $this->image,
         ];
     }
-
-
 }

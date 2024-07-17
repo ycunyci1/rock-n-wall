@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\Role;
 
-use App\Models\Admin;
 use App\Models\AdminRole;
 use App\Orchid\Layouts\Role\RoleListLayout;
 use Illuminate\Http\Request;

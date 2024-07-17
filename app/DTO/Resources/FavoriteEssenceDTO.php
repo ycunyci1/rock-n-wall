@@ -7,11 +7,11 @@ use Spatie\LaravelData\Data;
 
 /**
  * @OA\Schema(
- *     schema="MainPageEssence",
- *     description="Essence data"
+ *     schema="FavoriteEssence",
+ *     description="Favorite essence data"
  * )
  */
-class EssenceDTO extends Data
+class FavoriteEssenceDTO extends Data
 {
     public function __construct(
         /**
@@ -27,13 +27,6 @@ class EssenceDTO extends Data
          * @OA\Property(format="string", example="Animals")
          */
         public string $name,
-
-        /**
-         * @var string
-         *
-         * @OA\Property(format="string", example="horizontal/vertical")
-         */
-        public string $displayType,
 
         /**
          * @var array

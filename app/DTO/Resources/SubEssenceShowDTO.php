@@ -13,38 +13,41 @@ use Spatie\LaravelData\Data;
  */
 class SubEssenceShowDTO extends Data
 {
-    public function __construct
-    (
+    public function __construct(
         /**
-         * @var integer
+         * @var int
+         *
          * @OA\Property(format="string", example="123")
          */
-        public int      $id,
+        public int $id,
 
         /**
          * @var string
+         *
          * @OA\Property(format="string", example="Cats")
          */
-        public string   $name,
+        public string $name,
 
         /**
          * @var string
+         *
          * @OA\Property(format="string", example="http://domain/storage/images/cats.jpg")
          */
-        public string   $image,
+        public string $image,
 
         /**
          * @var array
+         *
          * @OA\Property (
          *     format="array",
+         *
          *     @OA\Items(ref="#/components/schemas/Product")
          * )
          */
         #[DataCollectionOf(ProductDTO::class)]
         public iterable $products
 
-    )
-    {
+    ) {
         $this->products = ProductDTO::collect($this->products);
     }
 }

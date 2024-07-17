@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Orchid\Layouts\Role;
 
-use App\Models\Admin;
 use App\Models\AdminRole;
 use Orchid\Platform\Models\Role;
 use Orchid\Screen\Actions\Button;

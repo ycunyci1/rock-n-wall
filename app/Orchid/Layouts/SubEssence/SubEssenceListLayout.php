@@ -2,7 +2,6 @@
 
 namespace App\Orchid\Layouts\SubEssence;
 
-use App\Models\Product;
 use App\Models\SubEssence;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
@@ -39,6 +38,7 @@ class SubEssenceListLayout extends Table
                 ->width(50)
                 ->render(function (SubEssence $subEssence) {
                     $link = route('platform.subEssence.edit', $subEssence);
+
                     return "<a href=$link><img src={$subEssence->mainProduct->image} width='150' height='150'></a>";
                 }),
             TD::make('essence_id', 'Раздел')

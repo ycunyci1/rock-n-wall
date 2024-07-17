@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -24,7 +23,7 @@ class ProductFactory extends Factory
             'image' => fake()->imageUrl,
             'new' => fake()->boolean(),
             'popular' => fake()->boolean(),
-            'sort' => rand(1, 10000)
+            'sort' => rand(1, 10000),
         ];
     }
 }

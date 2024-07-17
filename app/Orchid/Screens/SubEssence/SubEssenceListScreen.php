@@ -2,9 +2,7 @@
 
 namespace App\Orchid\Screens\SubEssence;
 
-use App\Models\Product;
 use App\Models\SubEssence;
-use App\Orchid\Layouts\Product\ProductListLayout;
 use App\Orchid\Layouts\SubEssence\SubEssenceListLayout;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
@@ -25,8 +23,6 @@ class SubEssenceListScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -43,7 +39,7 @@ class SubEssenceListScreen extends Screen
         return [
             Link::make('Создать')
                 ->icon('pencil')
-                ->route('platform.subEssence.edit')
+                ->route('platform.subEssence.edit'),
         ];
     }
 
@@ -55,7 +51,7 @@ class SubEssenceListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            SubEssenceListLayout::class
+            SubEssenceListLayout::class,
         ];
     }
 }

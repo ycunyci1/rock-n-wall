@@ -6,11 +6,12 @@ use Spatie\LaravelData\Data;
 
 /**
  * @OA\Schema(
- *     schema="SubEssence",
- *     description="Sub essence data"
+ *     schema="FavoriteSubEssence",
+ *     type="object",
+ *     description="Favorite sub-essence data"
  * )
  */
-class SubEssenceDTO extends Data
+class FavoriteSubEssenceDTO extends Data
 {
     /**
      * @OA\Property(format="string", example="123")

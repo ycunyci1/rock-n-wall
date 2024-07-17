@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\Resources\FavoriteDTO;
 use App\Models\Product;
 use App\Models\SubEssence;
 use App\Services\FavoriteService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 class FavoriteController extends BaseApiController
@@ -17,68 +19,223 @@ class FavoriteController extends BaseApiController
     }
 
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/v1/favorites",
+     *     summary="Получить избранное для текущего пользователя",
+     *     tags={"Favorite"},
+     *
+     *     @OA\Response(
+     *          response=200,
+     *          description="Избранное пользователя",
+     *
+     *          @OA\JsonContent(
+     *              ref="#/components/schemas/Favorite"
+     *          )
+     *     ),
+     *     security={
+     *       {"auth_api": {}}
+     *     }
+     * )
+     *
+     * @return JsonResponse
      */
     public function index()
     {
-        return response()->json(FavoriteService::getFavorites());
+        $favorite = FavoriteService::getFavorites();
+
+        return response()->json(new FavoriteDTO(
+            all: $favorite['all'],
+            essences: $favorite['essences'],
+        ));
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/v1/favorites/products/{productId}",
+     *     summary="Добавить отдельное изображение в избранное",
+     *     tags={"Favorite"},
+     *
+     *     @OA\Parameter(
+     *          name="productId",
+     *          description="Id добавляемого изображения",
+     *          in="path",
+     *          required=true,
+     *          example="1",
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *     ),
+     *
+     *     @OA\Response(
+     *          response=201,
+     *          description="Успешно добавлено",
+     *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Произошла ошибка при добавлении",
+     *     ),
+     *     security={
+     *       {"auth_api": {}}
+     *     }
+     * )
+     *
+     * @return JsonResponse
+     */
     public function storeProduct(Product $product)
     {
         try {
             $this->service->addToFavorite(Product::class, $product->id);
         } catch (\Exception $exception) {
-            Log::error('Ошибка добавления товара в избранное: ' . $exception->getMessage());
+            Log::error('Ошибка добавления товара в избранное: '.$exception->getMessage());
+
             return $this->responseJson([
-                'message' => 'Произошла ошибка, попробуйте повторить попытку позже'
+                'message' => 'Произошла ошибка, попробуйте повторить попытку позже',
             ], 400);
         }
 
-        return $this->responseJson(['message' => 'Успешно добавлено']);
+        return $this->responseJson([], 201);
     }
 
+    /**
+     * @OA\Post(
+     *     path="/api/v1/favorites/sub-essences/{subEssenceId}",
+     *     summary="Добавить sub-essence в избранное",
+     *     tags={"Favorite"},
+     *
+     *     @OA\Parameter(
+     *          name="subEssenceId",
+     *          description="Id добавляемого sub-essence",
+     *          in="path",
+     *          required=true,
+     *          example="1",
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *     ),
+     *
+     *     @OA\Response(
+     *          response=201,
+     *          description="Успешно добавлено",
+     *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Произошла ошибка при добавлении",
+     *     ),
+     *     security={
+     *       {"auth_api": {}}
+     *     }
+     * )
+     *
+     * @return JsonResponse
+     */
     public function storeSubEssence(SubEssence $subEssence)
     {
         try {
             $this->service->addToFavorite(SubEssence::class, $subEssence->id);
         } catch (\Exception $exception) {
-            Log::error('Ошибка добавления категории в избранное: ' . $exception->getMessage());
-            return $this->responseJson([
-                'message' => 'Произошла ошибка, попробуйте повторить попытку позже'
-            ], 400);
+            Log::error('Ошибка добавления категории в избранное: '.$exception->getMessage());
+
+            return $this->responseJson([], 400);
         }
-        return $this->responseJson(['message' => 'Успешно добавлено']);
+
+        return $this->responseJson([], 201);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/v1/favorites/products/{productId}",
+     *     summary="Удалить отдельное изображение из избранного",
+     *     tags={"Favorite"},
+     *
+     *     @OA\Parameter(
+     *          name="productId",
+     *          description="Id удаляемого изображения",
+     *          in="path",
+     *          required=true,
+     *          example="1",
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *     ),
+     *
+     *     @OA\Response(
+     *          response=204,
+     *          description="Успешно удалено",
+     *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Произошла ошибка при удалении",
+     *     ),
+     *     security={
+     *       {"auth_api": {}}
+     *     }
+     * )
+     *
+     * @return JsonResponse
      */
     public function destroyProduct(Product $product)
     {
         try {
             $this->service->deleteFromFavorite(Product::class, $product->id);
         } catch (\Exception $exception) {
-            Log::error('Ошибка удаления товара из избранного: ' . $exception->getMessage());
+            Log::error('Ошибка удаления товара из избранного: '.$exception->getMessage());
+
             return $this->responseJson([
-                'message' => 'Произошла ошибка, попробуйте повторить попытку позже'
+                'message' => 'Произошла ошибка, попробуйте повторить попытку позже',
             ], 400);
         }
 
-        return $this->responseJson(['message' => 'Успешно удалено']);
+        return $this->responseJson([], 204);
     }
 
+    /**
+     * @OA\Delete (
+     *     path="/api/v1/favorites/sub-essences/{subEssenceId}",
+     *     summary="Удалить sub-essence из избранного",
+     *     tags={"Favorite"},
+     *
+     *     @OA\Parameter(
+     *          name="subEssenceId",
+     *          description="Id удаляемого sub-essence",
+     *          in="path",
+     *          required=true,
+     *          example="1",
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *     ),
+     *
+     *     @OA\Response(
+     *          response=204,
+     *          description="Успешно удалено",
+     *     ),
+     *     @OA\Response(
+     *          response=400,
+     *          description="Произошла ошибка при добавлении",
+     *     ),
+     *     security={
+     *       {"auth_api": {}}
+     *     }
+     * )
+     *
+     * @return JsonResponse
+     */
     public function destroySubEssence(SubEssence $subEssence)
     {
         try {
             $this->service->deleteFromFavorite(SubEssence::class, $subEssence->id);
         } catch (\Exception $exception) {
-            Log::error('Ошибка удаления категории из избранного: ' . $exception->getMessage());
+            Log::error('Ошибка удаления категории из избранного: '.$exception->getMessage());
+
             return $this->responseJson([
-                'message' => 'Произошла ошибка, попробуйте повторить попытку позже'
+                'message' => 'Произошла ошибка, попробуйте повторить попытку позже',
             ], 400);
         }
 
-        return $this->responseJson(['message' => 'Успешно удалено']);
+        return $this->responseJson([], 204);
     }
 }

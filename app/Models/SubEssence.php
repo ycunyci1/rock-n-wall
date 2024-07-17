@@ -19,7 +19,6 @@ use Illuminate\Support\Collection;
  * @property int|null $sort
  * @property string $created_at
  * @property string $updated_at
- *
  * @property int $productsCount
  * @property string $url
  * @property string|null $image
@@ -27,8 +26,6 @@ use Illuminate\Support\Collection;
  * @property Collection|Product[] $products
  * @property Product|null $mainProduct
  * @property Collection|Favorite[] $favorites
- *
- * @package App\Models
  */
 class SubEssence extends Model
 {

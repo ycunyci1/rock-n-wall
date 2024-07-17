@@ -18,7 +18,7 @@ class Favorite extends Model
         return $this->hasMany(User::class);
     }
 
-    public function favoritable():MorphTo
+    public function favoritable(): MorphTo
     {
         return $this->morphTo();
     }

@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use App\Models\Product;
 use App\Models\SubEssence;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ProductSubEssenceSeeder extends Seeder
 {

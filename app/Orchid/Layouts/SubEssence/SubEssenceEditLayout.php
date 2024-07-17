@@ -9,7 +9,6 @@ use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
 use Orchid\Screen\TD;
 
-
 class SubEssenceEditLayout extends Rows
 {
     /**
@@ -30,22 +29,22 @@ class SubEssenceEditLayout extends Rows
     protected function fields(): iterable
     {
         return [
-                 Input::make('subEssence.name')
-                     ->title('Название'),
+            Input::make('subEssence.name')
+                ->title('Название'),
 
-                 Select::make('subEssence.main_product_id')
-                     ->title('Основное изображение')
-                     ->fromModel(Product::class, 'name', 'id')
-                    ->empty('Не выбрано'),
+            Select::make('subEssence.main_product_id')
+                ->title('Основное изображение')
+                ->fromModel(Product::class, 'name', 'id')
+                ->empty('Не выбрано'),
 
-                 Select::make('subEssence.essence_id')
-                     ->title('Раздел')
-                     ->fromModel(Essence::class, 'name', 'id')
-                     ->empty('Не выбрано'),
+            Select::make('subEssence.essence_id')
+                ->title('Раздел')
+                ->fromModel(Essence::class, 'name', 'id')
+                ->empty('Не выбрано'),
 
-                 Input::make('subEssence.sort')
-                     ->title('Сортировка')
-                     ->type('number')
+            Input::make('subEssence.sort')
+                ->title('Сортировка')
+                ->type('number'),
         ];
     }
 }

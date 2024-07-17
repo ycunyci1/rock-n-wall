@@ -6,7 +6,6 @@ use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Rows;
 use Orchid\Screen\TD;
 
-
 class TagEditLayout extends Rows
 {
     /**

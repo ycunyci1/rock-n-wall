@@ -2,7 +2,6 @@
 
 namespace App\Orchid\Layouts\Tag;
 
-use App\Models\Essence;
 use App\Models\Tag;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;

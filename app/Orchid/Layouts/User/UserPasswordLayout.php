@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Orchid\Layouts\User;
 
 use App\Models\Admin;
-use Orchid\Platform\Models\User;
 use Orchid\Screen\Field;
 use Orchid\Screen\Fields\Password;
 use Orchid\Screen\Layouts\Rows;

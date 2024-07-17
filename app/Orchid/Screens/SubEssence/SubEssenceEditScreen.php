@@ -2,17 +2,11 @@
 
 namespace App\Orchid\Screens\SubEssence;
 
-use App\Models\Product;
-
 use App\Models\SubEssence;
-use App\Orchid\Layouts\Product\ProductEditLayout;
 use App\Orchid\Layouts\SubEssence\SubEssenceEditLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\CheckBox;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
-use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
@@ -34,8 +28,6 @@ class SubEssenceEditScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -53,7 +45,7 @@ class SubEssenceEditScreen extends Screen
             Button::make('Создать')
                 ->icon('pencil')
                 ->method('create')
-                ->canSee(!$this->subEssence->exists),
+                ->canSee(! $this->subEssence->exists),
 
             Button::make('Обновить')
                 ->icon('note')
@@ -75,8 +67,8 @@ class SubEssenceEditScreen extends Screen
     public function layout(): iterable
     {
         return [
-            SubEssenceEditLayout::class
-            ];
+            SubEssenceEditLayout::class,
+        ];
     }
 
     public function create(Request $request)

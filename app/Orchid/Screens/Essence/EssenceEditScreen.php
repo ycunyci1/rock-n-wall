@@ -3,13 +3,10 @@
 namespace App\Orchid\Screens\Essence;
 
 use App\Models\Essence;
-use App\Models\Product;
 use App\Orchid\Layouts\Essence\EssenceEditLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
-use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
@@ -31,8 +28,6 @@ class EssenceEditScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -50,7 +45,7 @@ class EssenceEditScreen extends Screen
             Button::make('Создать')
                 ->icon('pencil')
                 ->method('create')
-                ->canSee(!$this->essence->exists),
+                ->canSee(! $this->essence->exists),
 
             Button::make('Обновить')
                 ->icon('note')
@@ -72,8 +67,8 @@ class EssenceEditScreen extends Screen
     public function layout(): iterable
     {
         return [
-            EssenceEditLayout::class
-            ];
+            EssenceEditLayout::class,
+        ];
     }
 
     public function create(Request $request)

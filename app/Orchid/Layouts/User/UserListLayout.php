@@ -6,14 +6,10 @@ namespace App\Orchid\Layouts\User;
 
 use App\Models\Admin;
 use Carbon\Carbon;
-use Orchid\Platform\Models\User;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Actions\ModalToggle;
-use Orchid\Screen\Components\Cells\DateTimeSplit;
 use Orchid\Screen\Fields\Input;
-use Orchid\Screen\Layouts\Persona;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -43,7 +39,7 @@ class UserListLayout extends Table
                 ->render(fn (Admin $admin) => $admin->email),
 
             TD::make('created_at', 'Дата создания')
-                ->render(fn(Admin $admin) => Carbon::parse($admin->created_at)->format('d.m.Y H:i'))
+                ->render(fn (Admin $admin) => Carbon::parse($admin->created_at)->format('d.m.Y H:i'))
                 ->align(TD::ALIGN_RIGHT)
                 ->sort(),
 

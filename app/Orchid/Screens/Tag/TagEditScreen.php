@@ -2,16 +2,11 @@
 
 namespace App\Orchid\Screens\Tag;
 
-use App\Models\Essence;
-use App\Models\Product;
 use App\Models\Tag;
-use App\Orchid\Layouts\Essence\EssenceEditLayout;
 use App\Orchid\Layouts\Tag\TagEditLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
-use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
 
@@ -33,8 +28,6 @@ class TagEditScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -52,7 +45,7 @@ class TagEditScreen extends Screen
             Button::make('Создать')
                 ->icon('pencil')
                 ->method('create')
-                ->canSee(!$this->tag->exists),
+                ->canSee(! $this->tag->exists),
 
             Button::make('Обновить')
                 ->icon('note')
@@ -74,8 +67,8 @@ class TagEditScreen extends Screen
     public function layout(): iterable
     {
         return [
-            TagEditLayout::class
-            ];
+            TagEditLayout::class,
+        ];
     }
 
     public function create(Request $request)

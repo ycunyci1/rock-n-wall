@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DTO\Resources\UserDTO;
-use App\Http\Resources\UserResource;
 use Illuminate\Http\JsonResponse;
 
 class UserController extends BaseApiController
@@ -13,9 +12,11 @@ class UserController extends BaseApiController
      *     path="/api/v1/user-info",
      *     summary="Получить информацию о текущем пользователе",
      *     tags={"Other"},
+     *
      *     @OA\Response(
      *          response=200,
      *          description="Информация о пользователе",
+     *
      *          @OA\JsonContent(
      *              ref="#/components/schemas/User"
      *          )
@@ -24,9 +25,6 @@ class UserController extends BaseApiController
      *       {"auth_api": {}}
      *     }
      * )
-     *
-     * @return JsonResponse
-     *
      */
     public function index(): JsonResponse
     {

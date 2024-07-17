@@ -22,7 +22,7 @@ class ProductDetailResource extends JsonResource
                 'live' => boolval($this->live),
                 'image' => $this->image,
             ],
-            'info' => ProductInfoResource::collection($this->subEssences)
+            'info' => ProductInfoResource::collection($this->subEssences),
         ];
     }
 }

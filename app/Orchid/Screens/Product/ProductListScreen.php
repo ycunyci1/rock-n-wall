@@ -23,8 +23,6 @@ class ProductListScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -41,7 +39,7 @@ class ProductListScreen extends Screen
         return [
             Link::make('Создать')
                 ->icon('pencil')
-                ->route('platform.product.edit')
+                ->route('platform.product.edit'),
         ];
     }
 
@@ -53,7 +51,7 @@ class ProductListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            ProductListLayout::class
+            ProductListLayout::class,
         ];
     }
 }

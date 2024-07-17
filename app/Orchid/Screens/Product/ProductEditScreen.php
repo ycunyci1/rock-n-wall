@@ -3,13 +3,11 @@
 namespace App\Orchid\Screens\Product;
 
 use App\Models\Product;
-
 use App\Orchid\Layouts\Product\ProductEditLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
-
 
 class ProductEditScreen extends Screen
 {
@@ -31,8 +29,6 @@ class ProductEditScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -50,7 +46,7 @@ class ProductEditScreen extends Screen
             Button::make('Создать')
                 ->icon('pencil')
                 ->method('create')
-                ->canSee(!$this->product->exists),
+                ->canSee(! $this->product->exists),
 
             Button::make('Обновить')
                 ->icon('note')
@@ -72,8 +68,8 @@ class ProductEditScreen extends Screen
     public function layout(): iterable
     {
         return [
-            ProductEditLayout::class
-            ];
+            ProductEditLayout::class,
+        ];
     }
 
     public function create(Request $request)

@@ -10,8 +10,8 @@ use Orchid\Attachment\Attachable;
 
 class Product extends Model
 {
-    use HasFactory;
     use Attachable;
+    use HasFactory;
 
     protected $guarded = [];
 

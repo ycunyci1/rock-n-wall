@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class FavoriteRequest extends FormRequest
 {
@@ -25,7 +24,7 @@ class FavoriteRequest extends FormRequest
         return [
             'favoritable_id' => 'required|int',
             'favoritable_type' => 'required|string',
-            'user_id' => 'required|int'
+            'user_id' => 'required|int',
         ];
     }
 }

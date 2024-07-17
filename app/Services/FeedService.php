@@ -9,6 +9,7 @@ class FeedService
     public function show(array $data)
     {
         $productsQuery = Product::query()->orderBy('sort')->orderBy('id');
+
         return match ($data['type']) {
             'popular' => $productsQuery->where('popular', 1)->take(15)->get(),
             'new' => $productsQuery->where('new', 1)->take(15)->get(),
@@ -52,10 +53,9 @@ class FeedService
                 ->orderBy('id', 'desc')
                 ->take(15)
                 ->get()
-            ->sortBy(function ($product) {
+                ->sortBy(function ($product) {
                     return sprintf('%-12s%s', $product->sort, $product->id);
                 });
         }
     }
 }
-

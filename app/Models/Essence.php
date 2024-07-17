@@ -16,11 +16,8 @@ use Illuminate\Support\Collection;
  * @property string|null $display_name
  * @property string $created_at
  * @property string $updated_at
- *
  * @property Collection|SubEssence[] $subEssences
  * @property string $url
- *
- * @package App\Models
  */
 class Essence extends Model
 {

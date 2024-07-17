@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Orchid\Access\Impersonation;
-use Orchid\Platform\Models\User;
 use Orchid\Screen\Action;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
@@ -39,7 +38,7 @@ class UserEditScreen extends Screen
         $admin->load(['roles']);
 
         return [
-            'admin'       => $admin,
+            'admin' => $admin,
             'permission' => $admin->getStatusPermission(),
         ];
     }
@@ -180,9 +179,9 @@ class UserEditScreen extends Screen
     }
 
     /**
-     * @throws \Exception
-     *
      * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Exception
      */
     public function remove(Admin $admin)
     {

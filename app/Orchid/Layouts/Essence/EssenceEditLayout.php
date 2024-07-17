@@ -8,7 +8,6 @@ use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
 use Orchid\Screen\TD;
 
-
 class EssenceEditLayout extends Rows
 {
     /**
@@ -37,7 +36,7 @@ class EssenceEditLayout extends Rows
 
             Select::make('essence.display_type')
                 ->title('Тип отображения')
-                ->options(EssenceDisplayTypeEnum::cases())
+                ->options(EssenceDisplayTypeEnum::cases()),
         ];
     }
 }

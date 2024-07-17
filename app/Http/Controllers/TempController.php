@@ -10,8 +10,9 @@ class TempController extends BaseApiController
     public function login()
     {
         $user = User::query()->first();
+
         return response()->json([
-            'token' => $user->createToken('AUTO_TOKEN')->accessToken
+            'token' => $user->createToken('AUTO_TOKEN')->accessToken,
         ]);
     }
 }

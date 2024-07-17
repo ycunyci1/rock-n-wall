@@ -51,9 +51,9 @@ Route::screen('products', ProductListScreen::class)
         ->push(__('Images'), route('platform.product.list')));
 Route::screen('product/{product?}', ProductEditScreen::class)
     ->name('platform.product.edit')
-->breadcrumbs(fn (Trail $trail) => $trail
-    ->parent('platform.product.list')
-    ->push(__('Images edit'), route('platform.product.edit')));
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.product.list')
+        ->push(__('Images edit'), route('platform.product.edit')));
 
 //Essence
 Route::screen('essences', EssenceListScreen::class)
@@ -90,9 +90,6 @@ Route::screen('tag/{tag?}', TagEditScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.tag.list')
         ->push(__('Tag edit'), route('platform.tag.edit')));
-
-
-
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)

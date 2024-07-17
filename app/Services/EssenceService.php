@@ -20,6 +20,7 @@ class EssenceService
                 ->take(15)
                 ->get();
         }
+
         return $essence
             ->subEssences()
             ->where('sort', '<', $lastSubEssence->sort)

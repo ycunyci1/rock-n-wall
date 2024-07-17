@@ -2,9 +2,7 @@
 
 namespace App\Orchid\Screens\Tag;
 
-use App\Models\Essence;
 use App\Models\Tag;
-use App\Orchid\Layouts\Essence\EssenceListLayout;
 use App\Orchid\Layouts\Tag\TagListLayout;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
@@ -25,8 +23,6 @@ class TagListScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -43,7 +39,7 @@ class TagListScreen extends Screen
         return [
             Link::make('Создать')
                 ->icon('pencil')
-                ->route('platform.tag.edit')
+                ->route('platform.tag.edit'),
         ];
     }
 
@@ -55,7 +51,7 @@ class TagListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            TagListLayout::class
+            TagListLayout::class,
         ];
     }
 }

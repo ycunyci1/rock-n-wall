@@ -10,7 +10,6 @@ use Orchid\Screen\Fields\Picture;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
 
-
 class ProductEditLayout extends Rows
 {
     /**
@@ -68,7 +67,7 @@ class ProductEditLayout extends Rows
                 ->fromModel(Tag::class, 'name', 'id')
                 ->multiple()
                 ->title('Тэги')
-                ->help('Выберите тэги, к которым относится это изображение')
+                ->help('Выберите тэги, к которым относится это изображение'),
         ];
     }
 }

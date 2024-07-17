@@ -23,8 +23,6 @@ class EssenceListScreen extends Screen
 
     /**
      * The name of the screen displayed in the header.
-     *
-     * @return string|null
      */
     public function name(): ?string
     {
@@ -41,7 +39,7 @@ class EssenceListScreen extends Screen
         return [
             Link::make('Создать')
                 ->icon('pencil')
-                ->route('platform.essence.edit')
+                ->route('platform.essence.edit'),
         ];
     }
 
@@ -53,7 +51,7 @@ class EssenceListScreen extends Screen
     public function layout(): iterable
     {
         return [
-            EssenceListLayout::class
+            EssenceListLayout::class,
         ];
     }
 }

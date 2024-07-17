@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 //todo: Временный метод до интеграции с мобильным разработчиком
-Route::group(['prefix' => 'v1'], function() {
+Route::group(['prefix' => 'v1'], function () {
     Route::get('login', [\App\Http\Controllers\TempController::class, 'login'])->name('login');
 
     Route::group(['middleware' => 'auth:api'], function () {
