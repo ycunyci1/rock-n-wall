@@ -20,8 +20,6 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => fake()->email,
-            'name' => fake()->name,
             'vip' => fake()->boolean(),
             'token' => Str::random(12)
         ];

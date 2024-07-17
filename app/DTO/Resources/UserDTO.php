@@ -20,18 +20,6 @@ class UserDTO extends Data
     public int $id;
 
     /**
-     * @var string
-     * @OA\Property(format="string", example="Mihail")
-     */
-    public string $name;
-
-    /**
-     * @var string
-     * @OA\Property(format="string", example="mihail23@gmail.com")
-     */
-    public string $email;
-
-    /**
      * @var bool
      * @OA\Property(format="bool", example="true")
      */

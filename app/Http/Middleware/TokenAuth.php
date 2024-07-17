@@ -26,7 +26,9 @@ class TokenAuth
         $user = User::where('token', $token)->first();
 
         if (!$user) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            $user = User::create([
+                'token' => $token,
+            ]);
         }
         auth()->login($user);
 
