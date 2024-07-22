@@ -32,11 +32,17 @@ class SubEssenceDTO extends Data
      */
     public int $productsCount;
 
-    public function __construct(int $id, string $name, string $image, int $productsCount)
+    /**
+     * @OA\Property(format="string", example="15")
+     */
+    public string $displayType;
+
+    public function __construct(int $id, string $name, string $image, int $productsCount, string $displayType)
     {
         $this->id = $id;
         $this->name = $name;
         $this->image = $image;
         $this->productsCount = $productsCount;
+        $this->displayType = $displayType;
     }
 }

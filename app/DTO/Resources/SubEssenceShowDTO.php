@@ -36,6 +36,13 @@ class SubEssenceShowDTO extends Data
         public string $image,
 
         /**
+         * @var string
+         *
+         * @OA\Property(format="string", example="selections/categories")
+         */
+        public string $displayType,
+
+        /**
          * @var array
          *
          * @OA\Property (

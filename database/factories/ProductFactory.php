@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\actions\TempGetRandomImageAction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,13 +18,15 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->text(5),
+            'name' => ucfirst(fake('ru_RU')->word),
             'vip' => fake()->boolean(),
             'live' => fake()->boolean(),
-            'image' => fake()->imageUrl,
+            'image' => config('app.url') . TempGetRandomImageAction::run(),
             'new' => fake()->boolean(),
             'popular' => fake()->boolean(),
             'sort' => rand(1, 10000),
         ];
     }
+
+
 }

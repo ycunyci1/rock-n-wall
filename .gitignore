@@ -4,6 +4,10 @@
 /public/hot
 /public/storage
 /storage/*.key
+/docker/mysql
+/docker/nginx/logs
+/storage/api-docs
+/resources/views/vendor/l5-swagger/.gitkeep
 /vendor
 .env
 .env.backup

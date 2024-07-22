@@ -22,6 +22,7 @@ use Illuminate\Support\Collection;
  * @property int $productsCount
  * @property string $url
  * @property string|null $image
+ * @property string|null $displayType
  * @property Essence|null $essence
  * @property Collection|Product[] $products
  * @property Product|null $mainProduct
@@ -81,5 +82,10 @@ class SubEssence extends Model
     public function getSubEssenceNameAttribute(): string
     {
         return $this->name;
+    }
+
+    public function getDisplayTypeAttribute():string
+    {
+        return $this->essence?->display_type;
     }
 }

@@ -19,7 +19,7 @@ class SubEssenceFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->text(6),
+            'name' => ucfirst(fake('ru_RU')->word),
             'main_product_id' => fake()->randomElement(Product::all()),
             'essence_id' => fake()->randomElement(Essence::all()),
             'sort' => rand(1, 10000),
