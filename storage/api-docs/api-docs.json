@@ -1,0 +1,950 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Rock-n-wall api",
+        "description": "Documentation Rock-n-wall API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://5.35.83.190",
+            "description": "Debug test server"
+        }
+    ],
+    "paths": {
+        "/api/v1/essences/{essenceId}": {
+            "get": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Получить детальные данные для страницы essence",
+                "operationId": "4dadae813ef78348de3aebcb1f20c36d",
+                "parameters": [
+                    {
+                        "name": "essenceId",
+                        "in": "path",
+                        "description": "Essence id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Данные для детальной страницы essence",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SubEssence"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/essences/{essenceId}/paginate": {
+            "get": {
+                "tags": [
+                    "Paginate"
+                ],
+                "summary": "Пагинация для детальной страницы essence",
+                "operationId": "39fdcc5bc5f2b0a77692c85591e983cf",
+                "parameters": [
+                    {
+                        "name": "essenceId",
+                        "in": "path",
+                        "description": "Essence id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Последний или первый id subEssence в текущем essence (первый если надо предыдущие получить, последний если следующие)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "need",
+                        "in": "query",
+                        "description": "Необходимо получить следующие или предыдущие",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "next/prev"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Данные для детальной страницы essence",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SubEssence"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/favorites": {
+            "get": {
+                "tags": [
+                    "Favorite"
+                ],
+                "summary": "Получить избранное для текущего пользователя",
+                "operationId": "daa01ecb981feaae74f5f4853f7074d4",
+                "responses": {
+                    "200": {
+                        "description": "Избранное пользователя",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Favorite"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/favorites/products/{productId}": {
+            "post": {
+                "tags": [
+                    "Favorite"
+                ],
+                "summary": "Добавить отдельное изображение в избранное",
+                "operationId": "d653007537919b21819cda0cdf9bfba2",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Id добавляемого изображения",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Успешно добавлено"
+                    },
+                    "400": {
+                        "description": "Произошла ошибка при добавлении"
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Favorite"
+                ],
+                "summary": "Удалить отдельное изображение из избранного",
+                "operationId": "072fa21a5bd78194328f06b16d8d8052",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Id удаляемого изображения",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Успешно удалено"
+                    },
+                    "400": {
+                        "description": "Произошла ошибка при удалении"
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/favorites/sub-essences/{subEssenceId}": {
+            "post": {
+                "tags": [
+                    "Favorite"
+                ],
+                "summary": "Добавить sub-essence в избранное",
+                "operationId": "2adda824ff38c83658630f2f45f52a06",
+                "parameters": [
+                    {
+                        "name": "subEssenceId",
+                        "in": "path",
+                        "description": "Id добавляемого sub-essence",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Успешно добавлено"
+                    },
+                    "400": {
+                        "description": "Произошла ошибка при добавлении"
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Favorite"
+                ],
+                "summary": "Удалить sub-essence из избранного",
+                "operationId": "5039ae77ca64bf6b79b0ece0f9e01d76",
+                "parameters": [
+                    {
+                        "name": "subEssenceId",
+                        "in": "path",
+                        "description": "Id удаляемого sub-essence",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Успешно удалено"
+                    },
+                    "400": {
+                        "description": "Произошла ошибка при добавлении"
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/feed": {
+            "get": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Получить данные для страницы бесконечной ленты",
+                "operationId": "c515c25489de1279c9ce0c37ea3b0d77",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Тип ленты",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "all/new/popular"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Данные для бесконечной ленты",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/feed/paginate": {
+            "get": {
+                "tags": [
+                    "Paginate"
+                ],
+                "summary": "Пагинация для бесконечной ленты",
+                "operationId": "a2b8c1c09d82ab7e6ef7b53cd51cb67d",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Тип ленты",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "all/new/popular"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Последний или первый id изображения в ленте (первый если надо предыдущие получить, последний если следующие)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "need",
+                        "in": "query",
+                        "description": "Необходимо получить следующие или предыдущие",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "next/prev"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Следующие или предыдущие изображения для бесконечной ленты",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/search": {
+            "get": {
+                "tags": [
+                    "Other"
+                ],
+                "summary": "Поиск (Поиск реализован по названию изображений и тэгам - они невидимы для пользователей и служат для группировки изображений)",
+                "operationId": "5755f50b3327d0334323ebc5e6419518",
+                "parameters": [
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "description": "Строка поиска",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "animals"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Найденные изображения",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/main": {
+            "get": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Получить данные для главной страницы",
+                "operationId": "d278b06e73d325a2a5d26e9e270e79ae",
+                "responses": {
+                    "200": {
+                        "description": "Данные для главной страницы",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MainPageData"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/essences/{essenceId}/sub-essences/{subEssenceId}/products/{productId}": {
+            "get": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Получить данные для детальной страницы изображения",
+                "operationId": "0cdf0e8d13c364c9e7c3d3308fe26842",
+                "parameters": [
+                    {
+                        "name": "essenceId",
+                        "in": "path",
+                        "description": "Essence id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "subEssenceId",
+                        "in": "path",
+                        "description": "Sub essence id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "Product id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Данные для детальной страницы изображения",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductShow"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/essences/{essenceId}/sub-essences/{subEssenceId}": {
+            "get": {
+                "tags": [
+                    "Pages"
+                ],
+                "summary": "Получить детальные данные для страницы sub essence",
+                "operationId": "dd2491bed5e0d4e554e6119c719fd170",
+                "parameters": [
+                    {
+                        "name": "essenceId",
+                        "in": "path",
+                        "description": "Essence id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "subEssenceId",
+                        "in": "path",
+                        "description": "Sub essence id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Данные для детальной страницы sub essence",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SubEssenceShow"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/essences/{essenceId}/sub-essences/{subEssenceId}/paginate": {
+            "get": {
+                "tags": [
+                    "Paginate"
+                ],
+                "summary": "Пагинация изображений на детальной странице subEssence",
+                "operationId": "8d446cf4127dd2b6e3e9537ed9acb53f",
+                "parameters": [
+                    {
+                        "name": "essenceId",
+                        "in": "path",
+                        "description": "Essence id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "subEssenceId",
+                        "in": "path",
+                        "description": "Sub essence id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Последний или первый id изображения в текущем sub essence (первый если надо предыдущие получить, последний если следующие)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "need",
+                        "in": "query",
+                        "description": "Необходимо получить следующие или предыдущие",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "next/prev"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Следующие или предыдущие изображения на странице sub essence",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/user-info": {
+            "get": {
+                "tags": [
+                    "Other"
+                ],
+                "summary": "Получить информацию о текущем пользователе",
+                "operationId": "3ddeb7b0bcce128ca667394700dec597",
+                "responses": {
+                    "200": {
+                        "description": "Информация о пользователе",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "MainPageEssence": {
+                "description": "Essence data",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "string",
+                        "example": "123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Animals"
+                    },
+                    "displayType": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "horizontal/vertical"
+                    },
+                    "subEssences": {
+                        "type": "array",
+                        "format": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SubEssence"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Favorite": {
+                "description": "Данные для главной страницы",
+                "properties": {
+                    "all": {
+                        "type": "array",
+                        "format": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    },
+                    "essences": {
+                        "type": "array",
+                        "format": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FavoriteEssence"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "FavoriteEssence": {
+                "description": "Favorite essence data",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "string",
+                        "example": "123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Animals"
+                    },
+                    "subEssences": {
+                        "type": "array",
+                        "format": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SubEssence"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "FavoriteSubEssence": {
+                "description": "Favorite sub-essence data",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "string",
+                        "example": "123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Cats"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "http://domain/storage/images/cats.jpg"
+                    },
+                    "productsCount": {
+                        "type": "integer",
+                        "format": "integer",
+                        "example": "15"
+                    }
+                },
+                "type": "object"
+            },
+            "MainPageData": {
+                "description": "Данные для главной страницы",
+                "properties": {
+                    "liveImages": {
+                        "type": "array",
+                        "format": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    },
+                    "essences": {
+                        "type": "array",
+                        "format": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MainPageEssence"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "Product": {
+                "description": "Product data",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "string",
+                        "example": "123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Black car"
+                    },
+                    "vip": {
+                        "type": "boolean",
+                        "format": "bool",
+                        "example": "true"
+                    },
+                    "live": {
+                        "type": "boolean",
+                        "format": "bool",
+                        "example": "true"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "http://domain/storage/images/black-car.jpg"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductInfoDialog": {
+                "description": "Данные для модального окна продукта",
+                "properties": {
+                    "subEssenceId": {
+                        "type": "string",
+                        "format": "integer",
+                        "example": "123"
+                    },
+                    "essenceName": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Cats"
+                    },
+                    "subEssenceName": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Cats"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "http://domain/storage/images/black-car.jpg"
+                    },
+                    "productsCount": {
+                        "type": "integer",
+                        "format": "integer",
+                        "example": "Animals"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductShow": {
+                "description": "Данные для детальной страницы изображения",
+                "properties": {
+                    "product": {
+                        "$ref": "#/components/schemas/Product"
+                    },
+                    "info": {
+                        "type": "array",
+                        "format": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ProductInfoDialog"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "SubEssence": {
+                "description": "Sub essence data",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "string",
+                        "example": "123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Cats"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "http://domain/storage/images/cats.jpg"
+                    },
+                    "productsCount": {
+                        "type": "integer",
+                        "format": "integer",
+                        "example": "15"
+                    }
+                },
+                "type": "object"
+            },
+            "SubEssenceShow": {
+                "description": "Sub essence show data",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "string",
+                        "example": "123"
+                    },
+                    "name": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "Cats"
+                    },
+                    "image": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "http://domain/storage/images/cats.jpg"
+                    },
+                    "products": {
+                        "type": "array",
+                        "format": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Product"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "description": "User info",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "string",
+                        "example": "23"
+                    },
+                    "vip": {
+                        "type": "boolean",
+                        "format": "bool",
+                        "example": "true"
+                    },
+                    "autoChangerEnabled": {
+                        "type": "boolean",
+                        "format": "bool",
+                        "example": "true"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "auth_api": {
+                "type": "apiKey",
+                "name": "app-key",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Pages",
+            "description": "Информация для отдельных страниц"
+        },
+        {
+            "name": "Favorite",
+            "description": "Маршруты для избранного"
+        },
+        {
+            "name": "Paginate",
+            "description": "Пагинация"
+        },
+        {
+            "name": "Other",
+            "description": "Остальное"
+        }
+    ]
+}

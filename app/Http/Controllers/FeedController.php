@@ -26,7 +26,7 @@ class FeedController extends BaseApiController
      *          example="all/new/popular",
      *
      *          @OA\Schema(
-     *              type="integer",
+     *              type="string",
      *          ),
      *     ),
      *
@@ -142,7 +142,7 @@ class FeedController extends BaseApiController
      *          example="animals",
      *
      *          @OA\Schema(
-     *              type="integer",
+     *              type="string",
      *          ),
      *     ),
      *
