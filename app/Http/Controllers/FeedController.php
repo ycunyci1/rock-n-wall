@@ -133,27 +133,29 @@ class FeedController extends BaseApiController
      *     path="/api/v1/search",
      *     summary="Поиск (Поиск реализован по названию изображений и тэгам - они невидимы для пользователей и служат для группировки изображений)",
      *     tags={"Other"},
-     *
      *     @OA\Parameter(
      *          name="query",
      *          description="Строка поиска",
      *          in="query",
      *          required=true,
      *          example="animals",
-     *
      *          @OA\Schema(
-     *              type="string",
-     *          ),
+     *              type="string"
+     *          )
      *     ),
-     *
      *     @OA\Response(
      *          response=200,
      *          description="Найденные изображения",
-     *
      *          @OA\JsonContent(
-     *              type="array",
-     *
-     *              @OA\Items(ref="#/components/schemas/Product")
+     *              @OA\Property(
+     *                  property="items",
+     *                  type="array",
+     *                  @OA\Items(ref="#/components/schemas/Product")
+     *              ),
+     *              @OA\Property(
+     *                  property="status",
+     *                  type="string"
+     *              )
      *          )
      *     ),
      *     security={
@@ -173,6 +175,10 @@ class FeedController extends BaseApiController
             ->orWhereHas('tags', fn ($query) => $query->where('name', 'LIKE', "%$searchTerm%")
             )->get();
 
-        return response()->json(ProductDTO::collect($result));
+        return response()->json([
+            'items' => ProductDTO::collect($result),
+            'status' => 'success',
+            'count' => $result->count()
+            ]);
     }
 }

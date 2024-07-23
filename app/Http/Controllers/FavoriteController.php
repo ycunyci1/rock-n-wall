@@ -94,7 +94,7 @@ class FavoriteController extends BaseApiController
             ], 400);
         }
 
-        return $this->responseJson([], 201);
+        return $this->responseJson(['message' => 'Успешно добавлено!'], 201);
     }
 
     /**
@@ -137,10 +137,10 @@ class FavoriteController extends BaseApiController
         } catch (\Exception $exception) {
             Log::error('Ошибка добавления категории в избранное: '.$exception->getMessage());
 
-            return $this->responseJson([], 400);
+            return $this->responseJson(['message' => 'failed'], 400);
         }
 
-        return $this->responseJson([], 201);
+        return $this->responseJson(['message' => 'Успешно добавлено!'], 201);
     }
 
     /**
@@ -188,7 +188,7 @@ class FavoriteController extends BaseApiController
             ], 400);
         }
 
-        return $this->responseJson([], 204);
+        return $this->responseJson(['message' => 'Успешно удалено!'], 204);
     }
 
     /**
@@ -236,6 +236,6 @@ class FavoriteController extends BaseApiController
             ], 400);
         }
 
-        return $this->responseJson([], 204);
+        return $this->responseJson(['message' => 'Успешно удалено!'], 204);
     }
 }

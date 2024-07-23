@@ -47,9 +47,7 @@ class SubEssenceController extends BaseApiController
      *          description="Данные для детальной страницы sub essence",
      *
      *          @OA\JsonContent(
-     *              type="array",
-     *
-     *              @OA\Items(ref="#/components/schemas/SubEssenceShow")
+     *              ref="#/components/schemas/SubEssenceShow"
      *          )
      *     ),
      *     security={
@@ -124,7 +122,6 @@ class SubEssenceController extends BaseApiController
      *
      *          @OA\JsonContent(
      *              type="array",
-     *
      *              @OA\Items(ref="#/components/schemas/Product")
      *          )
      *     ),
