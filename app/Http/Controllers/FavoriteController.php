@@ -70,10 +70,22 @@ class FavoriteController extends BaseApiController
      *     @OA\Response(
      *          response=201,
      *          description="Успешно добавлено",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  )
+     *              )
      *     ),
      *     @OA\Response(
      *          response=400,
      *          description="Произошла ошибка при добавлении",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  )
+     *              )
      *     ),
      *     security={
      *       {"auth_api": {}}
@@ -87,7 +99,7 @@ class FavoriteController extends BaseApiController
         try {
             $this->service->addToFavorite(Product::class, $product->id);
         } catch (\Exception $exception) {
-            Log::error('Ошибка добавления товара в избранное: '.$exception->getMessage());
+            Log::error('Ошибка добавления товара в избранное: ' . $exception->getMessage());
 
             return $this->responseJson([
                 'message' => 'Произошла ошибка, попробуйте повторить попытку позже',
@@ -118,10 +130,22 @@ class FavoriteController extends BaseApiController
      *     @OA\Response(
      *          response=201,
      *          description="Успешно добавлено",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  )
+     *              )
      *     ),
      *     @OA\Response(
      *          response=400,
      *          description="Произошла ошибка при добавлении",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  )
+     *              )
      *     ),
      *     security={
      *       {"auth_api": {}}
@@ -135,7 +159,7 @@ class FavoriteController extends BaseApiController
         try {
             $this->service->addToFavorite(SubEssence::class, $subEssence->id);
         } catch (\Exception $exception) {
-            Log::error('Ошибка добавления категории в избранное: '.$exception->getMessage());
+            Log::error('Ошибка добавления категории в избранное: ' . $exception->getMessage());
 
             return $this->responseJson(['message' => 'failed'], 400);
         }
@@ -164,10 +188,22 @@ class FavoriteController extends BaseApiController
      *     @OA\Response(
      *          response=204,
      *          description="Успешно удалено",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  )
+     *              )
      *     ),
      *     @OA\Response(
      *          response=400,
      *          description="Произошла ошибка при удалении",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  )
+     *              )
      *     ),
      *     security={
      *       {"auth_api": {}}
@@ -181,7 +217,7 @@ class FavoriteController extends BaseApiController
         try {
             $this->service->deleteFromFavorite(Product::class, $product->id);
         } catch (\Exception $exception) {
-            Log::error('Ошибка удаления товара из избранного: '.$exception->getMessage());
+            Log::error('Ошибка удаления товара из избранного: ' . $exception->getMessage());
 
             return $this->responseJson([
                 'message' => 'Произошла ошибка, попробуйте повторить попытку позже',
@@ -212,10 +248,22 @@ class FavoriteController extends BaseApiController
      *     @OA\Response(
      *          response=204,
      *          description="Успешно удалено",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  )
+     *              )
      *     ),
      *     @OA\Response(
      *          response=400,
      *          description="Произошла ошибка при добавлении",
+     *              @OA\JsonContent(
+     *                  @OA\Property(
+     *                      property="message",
+     *                      type="string"
+     *                  )
+     *              )
      *     ),
      *     security={
      *       {"auth_api": {}}
@@ -229,7 +277,7 @@ class FavoriteController extends BaseApiController
         try {
             $this->service->deleteFromFavorite(SubEssence::class, $subEssence->id);
         } catch (\Exception $exception) {
-            Log::error('Ошибка удаления категории из избранного: '.$exception->getMessage());
+            Log::error('Ошибка удаления категории из избранного: ' . $exception->getMessage());
 
             return $this->responseJson([
                 'message' => 'Произошла ошибка, попробуйте повторить попытку позже',
