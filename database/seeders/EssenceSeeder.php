@@ -14,8 +14,8 @@ class EssenceSeeder extends Seeder
     public function run(): void
     {
         $essences = [
-            ['name' => 'selections', 'display_type' => EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL],
-            ['name' => 'categories', 'display_type' => EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL],
+            ['name' => 'Selections', 'display_type' => EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL],
+            ['name' => 'Categories', 'display_type' => EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL],
         ];
         foreach ($essences as $essence) {
             Essence::query()->create($essence);

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('new')->default(0);
             $table->boolean('popular')->default(0);
             $table->unsignedBigInteger('sort')->default(500);
+            $table->unsignedBigInteger('downloads_count')->default(0);
             $table->timestamps();
         });
     }
