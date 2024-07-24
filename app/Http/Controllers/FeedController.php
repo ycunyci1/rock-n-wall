@@ -168,7 +168,7 @@ class FeedController extends BaseApiController
     public function search(SearchRequest $request)
     {
         $data = $request->validated();
-        $searchTerm = $data['query']; 
+        $searchTerm = $data['query'];
         // todo: Вынести в сервис
         $result = Product::query()
             ->where('name', 'LIKE', "%$searchTerm%")
