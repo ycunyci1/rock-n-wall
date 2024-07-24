@@ -170,7 +170,7 @@ class FeedController extends BaseApiController
         $data = $request->validated();
         $searchTerm = $data['query'];
         // todo: Вынести в сервис
-        $result = Product::query()
+        $result = Product::query() 
             ->where('name', 'LIKE', "%$searchTerm%")
             ->orWhereHas('tags', fn ($query) => $query->where('name', 'LIKE', "%$searchTerm%")
             )->get();
