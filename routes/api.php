@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +41,7 @@ Route::group(['prefix' => 'v1'], function () {
         });
 
         Route::prefix('rating')->group(function () {
-           Route::post('', fn() => 'ok');
+           Route::post('', [FeedbackController::class, 'store']);
         });
 
         Route::get('user-info', [UserController::class, 'index']);
