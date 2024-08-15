@@ -93,23 +93,11 @@ class SubEssenceController extends BaseApiController
      *     ),
      *
      *     @OA\Parameter(
-     *          name="id",
+     *          name="page",
      *          description="Последний или первый id изображения в текущем sub essence (первый если надо предыдущие получить, последний если следующие)",
      *          in="query",
      *          required=true,
      *          example="1",
-     *
-     *          @OA\Schema(
-     *              type="integer",
-     *          ),
-     *     ),
-     *
-     *     @OA\Parameter(
-     *          name="need",
-     *          description="Необходимо получить следующие или предыдущие",
-     *          in="query",
-     *          required=true,
-     *          example="next/prev",
      *
      *          @OA\Schema(
      *              type="integer",
@@ -133,6 +121,70 @@ class SubEssenceController extends BaseApiController
      * @return JsonResponse
      */
     public function paginate(Essence $essence, SubEssence $subEssence, PaginateRequest $request)
+    {
+        $data = $request->validated();
+        $products = app(SubEssenceService::class)->paginate($subEssence, $data);
+
+        return response()->json(ProductDTO::collect($products));
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/sub-essences/{subEssenceId}/paginate",
+     *     summary="Короткий запрос для пагинации изображений на детальной странице subEssence",
+     *     tags={"Paginate"},
+     *     @OA\Parameter(
+     *          name="subEssenceId",
+     *          description="Sub essence id",
+     *          in="path",
+     *          required=true,
+     *          example="1",
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *     ),
+     *
+     *     @OA\Parameter(
+     *          name="id",
+     *          description="Последний или первый id изображения в текущем sub essence (первый если надо предыдущие получить, последний если следующие)",
+     *          in="query",
+     *          required=true,
+     *          example="1",
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *     ),
+     *
+     *     @OA\Parameter(
+     *          name="need",
+     *          description="Необходимо получить следующие или предыдущие",
+     *          in="query",
+     *          example="next/prev",
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *     ),
+     *
+     *     @OA\Response(
+     *          response=200,
+     *          description="Следующие или предыдущие изображения на странице sub essence",
+     *
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/Product")
+     *          )
+     *     ),
+     *     security={
+     *       {"auth_api": {}}
+     *     }
+     * )
+     *
+     * @return JsonResponse
+     */
+    public function paginateShort(SubEssence $subEssence, PaginateRequest $request)
     {
         $data = $request->validated();
         $products = app(SubEssenceService::class)->paginate($subEssence, $data);

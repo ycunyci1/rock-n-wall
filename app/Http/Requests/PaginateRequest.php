@@ -23,8 +23,7 @@ class PaginateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required',
-            'need' => [Rule::in('prev', 'next'), 'required'],
+            'page' => 'int|required',
             'type' => [Rule::in('all', 'new', 'popular')],
         ];
     }

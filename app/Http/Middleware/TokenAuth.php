@@ -20,14 +20,15 @@ class TokenAuth
         if (! $token) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-        if (strlen($token) < 8) {
-            return response()->json(['message' => 'Token must be longer than 8 characters'], 422);
+        $dak = $request->header('device-api-key');
+        if (! $dak) {
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
-        $user = User::where('token', $token)->first();
+        $user = User::where('token', $dak)->first();
 
         if (! $user) {
             $user = User::create([
-                'token' => $token,
+                'token' => $dak,
             ]);
         }
         auth()->login($user);

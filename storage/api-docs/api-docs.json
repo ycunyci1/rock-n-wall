@@ -161,10 +161,34 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Успешно добавлено"
+                        "description": "Успешно добавлено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Произошла ошибка при добавлении"
+                        "description": "Произошла ошибка при добавлении",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -193,10 +217,34 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Успешно удалено"
+                        "description": "Успешно удалено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Произошла ошибка при удалении"
+                        "description": "Произошла ошибка при удалении",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -227,10 +275,34 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Успешно добавлено"
+                        "description": "Успешно добавлено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Произошла ошибка при добавлении"
+                        "description": "Произошла ошибка при добавлении",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -259,10 +331,34 @@
                 ],
                 "responses": {
                     "204": {
-                        "description": "Успешно удалено"
+                        "description": "Успешно удалено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "400": {
-                        "description": "Произошла ошибка при добавлении"
+                        "description": "Произошла ошибка при добавлении",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -399,10 +495,18 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Product"
-                                    }
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Product"
+                                            }
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -534,10 +638,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/SubEssenceShow"
-                                    }
+                                    "$ref": "#/components/schemas/SubEssenceShow"
                                 }
                             }
                         }
@@ -592,7 +693,66 @@
                         "name": "need",
                         "in": "query",
                         "description": "Необходимо получить следующие или предыдущие",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "next/prev"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Следующие или предыдущие изображения на странице sub essence",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Product"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth_api": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/sub-essences/{subEssenceId}/paginate": {
+            "get": {
+                "tags": [
+                    "Paginate"
+                ],
+                "summary": "Короткий запрос для пагинации изображений на детальной странице subEssence",
+                "operationId": "e6c9a91ba53876b595c0c0ebbe7880e9",
+                "parameters": [
+                    {
+                        "name": "subEssenceId",
+                        "in": "path",
+                        "description": "Sub essence id",
                         "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "Последний или первый id изображения в текущем sub essence (первый если надо предыдущие получить, последний если следующие)",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "need",
+                        "in": "query",
+                        "description": "Необходимо получить следующие или предыдущие",
                         "schema": {
                             "type": "integer"
                         },
@@ -867,6 +1027,11 @@
                         "type": "integer",
                         "format": "integer",
                         "example": "15"
+                    },
+                    "displayType": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "15"
                     }
                 },
                 "type": "object"
@@ -888,6 +1053,11 @@
                         "type": "string",
                         "format": "string",
                         "example": "http://domain/storage/images/cats.jpg"
+                    },
+                    "displayType": {
+                        "type": "string",
+                        "format": "string",
+                        "example": "selections/categories"
                     },
                     "products": {
                         "type": "array",

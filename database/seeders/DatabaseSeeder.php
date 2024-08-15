@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(EssenceSeeder::class);
-        Product::factory(300)->create();
+        Product::factory(2000)->create();
         SubEssence::factory(50)->create();
         User::factory(10)->create();
         $this->call(ProductSubEssenceSeeder::class);
