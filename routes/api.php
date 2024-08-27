@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,10 @@ Route::group(['prefix' => 'v1'], function () {
             Route::post('sub-essences/{subEssence}', [FavoriteController::class, 'storeSubEssence']);
             Route::delete('products/{product}', [FavoriteController::class, 'destroyProduct']);
             Route::delete('sub-essences/{subEssence}', [FavoriteController::class, 'destroySubEssence']);
+        });
+
+        Route::prefix('reports')->group(function() {
+            Route::post('', [ReportController::class, 'store']);
         });
 
         Route::prefix('rating')->group(function () {
