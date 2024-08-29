@@ -75,10 +75,9 @@ class FeedController extends BaseApiController
      *              type="integer",
      *          ),
      *     ),
-     *
      *     @OA\Parameter(
-     *          name="id",
-     *          description="Последний или первый id изображения в ленте (первый если надо предыдущие получить, последний если следующие)",
+     *          name="page",
+     *          description="Страница пагинации",
      *          in="query",
      *          required=true,
      *          example="1",
@@ -87,19 +86,6 @@ class FeedController extends BaseApiController
      *              type="integer",
      *          ),
      *     ),
-     *
-     *     @OA\Parameter(
-     *          name="need",
-     *          description="Необходимо получить следующие или предыдущие",
-     *          in="query",
-     *          required=true,
-     *          example="next/prev",
-     *
-     *          @OA\Schema(
-     *              type="integer",
-     *          ),
-     *     ),
-     *
      *     @OA\Response(
      *          response=200,
      *          description="Следующие или предыдущие изображения для бесконечной ленты",
@@ -120,9 +106,6 @@ class FeedController extends BaseApiController
     public function paginate(PaginateRequest $request)
     {
         $data = $request->validated();
-        if (! isset($data['type'])) {
-            $data['type'] = 'all';
-        }
         $products = app(FeedService::class)->paginate($data);
 
         return response()->json(ProductDTO::collect($products));

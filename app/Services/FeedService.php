@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Product;
+use App\Models\SubEssence;
+use Illuminate\Database\Eloquent\Collection;
 
 class FeedService
 {
@@ -17,45 +19,20 @@ class FeedService
         };
     }
 
-    public function paginate(array $data)
+    public function paginate(array $data): Collection
     {
-        $id = $data['id'];
-        $lastProduct = Product::find($id);
+        $page = $data['page'] ?? 1;
+        $productBaseRequest = Product::orderBy('sort')->orderBy('id');
 
-        $productBaseRequest = Product::query()->orderBy('sort')->orderBy('id');
         $productRequest = match ($data['type']) {
             'popular' => $productBaseRequest->where('popular', 1),
             'new' => $productBaseRequest->where('new', 1),
             default => $productBaseRequest
         };
 
-        if ($data['need'] == 'next') {
-            return $productRequest->where(function ($query) use ($lastProduct) {
-                $query->where('sort', '>', $lastProduct->sort)
-                    ->orWhere(function ($query) use ($lastProduct) {
-                        $query->where('sort', '=', $lastProduct->sort)
-                            ->where('id', '>', $lastProduct->id);
-                    });
-            })
-                ->orderBy('sort', 'asc')
-                ->orderBy('id', 'asc')
-                ->take(15)
-                ->get();
-        } else {
-            return $productRequest->where(function ($query) use ($lastProduct) {
-                $query->where('sort', '<', $lastProduct->sort)
-                    ->orWhere(function ($query) use ($lastProduct) {
-                        $query->where('sort', '=', $lastProduct->sort)
-                            ->where('id', '<', $lastProduct->id);
-                    });
-            })
-                ->orderBy('sort', 'desc')
-                ->orderBy('id', 'desc')
-                ->take(15)
-                ->get()
-                ->sortBy(function ($product) {
-                    return sprintf('%-12s%s', $product->sort, $product->id);
-                });
-        }
+        return $productRequest
+            ->skip(($page - 1) * 15)
+            ->take(15)
+            ->get()->values();
     }
 }
