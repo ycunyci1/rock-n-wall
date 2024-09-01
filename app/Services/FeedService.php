@@ -11,6 +11,11 @@ class FeedService
     public function show(array $data)
     {
         $productsQuery = Product::query()->orderBy('sort')->orderBy('id');
+        if (isset($data['q'])) {
+            $searchTerm = $data['q'];
+            $productsQuery->where('name', 'LIKE', "%$searchTerm%")
+                ->orWhereHas('tags', fn ($query) => $query->where('name', 'LIKE', "%$searchTerm%"));
+        }
 
         return match ($data['type']) {
             'popular' => $productsQuery->where('popular', 1)->take(15)->get(),

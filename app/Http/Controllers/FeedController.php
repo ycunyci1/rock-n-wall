@@ -29,17 +29,36 @@ class FeedController extends BaseApiController
      *              type="string",
      *          ),
      *     ),
-     *
-     *     @OA\Response(
-     *          response=200,
-     *          description="Данные для бесконечной ленты",
-     *
-     *          @OA\JsonContent(
-     *              type="array",
-     *
-     *              @OA\Items(ref="#/components/schemas/Product")
-     *          )
+     *     @OA\Parameter(
+     *          name="q",
+     *          description="Поиск",
+     *          in="query",
+     *          required=false,
+     *          example="Кот",
+     *          @OA\Schema(
+     *              type="string",
+     *          ),
      *     ),
+     *
+     * @OA\Response(
+     *     response=200,
+     *     description="Данные для бесконечной ленты",
+     *     @OA\JsonContent(
+     *         type="object",
+     *         @OA\Property(
+     *             property="items",
+     *             type="array",
+     *             description="Изображения ленты",
+     *             @OA\Items(ref="#/components/schemas/Product")
+     *         ),
+     *         @OA\Property(
+     *             property="similar",
+     *             type="array",
+     *             description="Рекомендации",
+     *             @OA\Items(ref="#/components/schemas/Product")
+     *         ),
+     *     )
+     * ),
      *     security={
      *       {"auth_api": {}}
      *     }
@@ -50,12 +69,14 @@ class FeedController extends BaseApiController
     public function show(FeedRequest $request)
     {
         $data = $request->validated();
-        if (! isset($data['type'])) {
+        if (!isset($data['type'])) {
             $data['type'] = 'all';
         }
         $feed = app(FeedService::class)->show($data);
-
-        return response()->json(ProductDTO::collect($feed));
+        return response()->json([
+            'items' => ProductDTO::collect($feed),
+            'similar' => ProductDTO::collect(Product::query()->inRandomOrder()->take(9)->get())
+        ]);
     }
 
     /**
@@ -155,13 +176,13 @@ class FeedController extends BaseApiController
         // todo: Вынести в сервис
         $result = Product::query()
             ->where('name', 'LIKE', "%$searchTerm%")
-            ->orWhereHas('tags', fn ($query) => $query->where('name', 'LIKE', "%$searchTerm%")
+            ->orWhereHas('tags', fn($query) => $query->where('name', 'LIKE', "%$searchTerm%")
             )->get();
 
         return response()->json([
             'items' => ProductDTO::collect($result),
             'status' => 'success',
             'count' => $result->count()
-            ]);
+        ]);
     }
 }

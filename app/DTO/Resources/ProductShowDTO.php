@@ -31,4 +31,11 @@ class ProductShowDTO extends Data
      */
     #[DataCollectionOf(ProductInfoDTO::class)]
     public iterable $info;
+
+    /**
+     * @OA\Property (
+     *     ref="#/components/schemas/AiPrompt"
+     * )
+     */
+    public ?AiPromptDTO $promptDetail;
 }

@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->string('ai_prompt_id')->nullable();
+        //descriptionPrompt, model, guidanceScale
+        Schema::create('ai_prompts', function (Blueprint $table) {
+            $table->id();
+            $table->text('description');
+            $table->string('model');
+            $table->string('guidanceScale');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('ai_prompt_id');
-        });
+        Schema::dropIfExists('ai_prompts');
     }
 };

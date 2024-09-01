@@ -26,7 +26,6 @@ class ProductFactory extends Factory
             'new' => fake()->boolean(),
             'popular' => fake()->boolean(),
             'sort' => rand(1, 10000),
-            'ai_prompt' => fake()->boolean(30) ? Str::random('15') : null,
         ];
     }
 

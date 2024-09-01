@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DTO\Resources\AiPromptDTO;
 use App\DTO\Resources\ProductDTO;
 use App\DTO\Resources\ProductInfoDTO;
 use App\DTO\Resources\ProductShowDTO;
@@ -70,9 +71,10 @@ class ProductController extends BaseApiController
     public function show(Essence $essence, SubEssence $subEssence, Product $product): JsonResponse
     {
         return response()->json(ProductShowDTO::from([
-            'product' => ProductDTO::from($product->toArray()),
-            'info' => ProductInfoDTO::collect($product->subEssences),
-        ]
+                'product' => ProductDTO::from($product->toArray()),
+                'info' => ProductInfoDTO::collect($product->subEssences),
+                'promptDetail' => $product->aiPrompt ? AiPromptDTO::from($product->aiPrompt->toArray()) : null
+            ]
         ));
     }
 }

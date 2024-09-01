@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(EssenceSeeder::class);
         Product::factory(2000)->create();
+        $this->call(AiPromptSeeder::class);
         SubEssence::factory(50)->create();
         User::factory(10)->create();
         $this->call(ProductSubEssenceSeeder::class);

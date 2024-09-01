@@ -24,6 +24,7 @@ class FeedRequest extends FormRequest
     {
         return [
             'type' => [Rule::in('all', 'new', 'popular')],
+            'q' => 'nullable|string',
         ];
     }
 }

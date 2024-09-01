@@ -18,6 +18,11 @@ class ProductInfoDTO extends Data
     public string $subEssenceId;
 
     /**
+     * @OA\Property(format="string", example="selections/categories")
+     */
+    public string $displayType;
+
+    /**
      * @OA\Property(format="string", example="Cats")
      */
     public string $essenceName;
