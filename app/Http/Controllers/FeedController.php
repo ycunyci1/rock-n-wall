@@ -40,23 +40,13 @@ class FeedController extends BaseApiController
      *          ),
      *     ),
      *
-     * @OA\Response(
-     *     response=200,
-     *     description="Данные для бесконечной ленты",
-     *     @OA\JsonContent(
-     *         type="object",
-     *         @OA\Property(
-     *             property="items",
-     *             type="array",
-     *             description="Изображения ленты",
-     *             @OA\Items(ref="#/components/schemas/Product")
-     *         ),
-     *         @OA\Property(
-     *             property="similar",
-     *             type="array",
-     *             description="Рекомендации",
-     *             @OA\Items(ref="#/components/schemas/Product")
-     *         ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Данные для бесконечной ленты",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/Product")
+     *          )
      *     )
      * ),
      *     security={
@@ -73,10 +63,7 @@ class FeedController extends BaseApiController
             $data['type'] = 'all';
         }
         $feed = app(FeedService::class)->show($data);
-        return response()->json([
-            'items' => ProductDTO::collect($feed),
-            'similar' => ProductDTO::collect(Product::query()->inRandomOrder()->take(9)->get())
-        ]);
+        return response()->json(ProductDTO::collect($feed));
     }
 
     /**
