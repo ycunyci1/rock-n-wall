@@ -18,11 +18,13 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $live = fake()->boolean();
         return [
             'name' => ucfirst(fake('ru_RU')->word),
             'vip' => fake()->boolean(),
-            'live' => fake()->boolean(),
+            'live' => $live,
             'image' => config('app.url') . TempGetRandomImageAction::run(),
+            'live_image' => $live ? config('app.url') . TempGetRandomImageAction::run() : null,
             'new' => fake()->boolean(),
             'popular' => fake()->boolean(),
             'sort' => rand(1, 10000),
