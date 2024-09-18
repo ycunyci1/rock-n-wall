@@ -18,7 +18,7 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
-        $live = fake()->boolean();
+        $live = fake()->boolean(30);
         return [
             'name' => ucfirst(fake('ru_RU')->word),
             'vip' => fake()->boolean(),
