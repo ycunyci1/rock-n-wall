@@ -26,6 +26,8 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('feed/paginate', [\App\Http\Controllers\FeedController::class, 'paginate']);
         Route::get('search', [\App\Http\Controllers\FeedController::class, 'search']);
 
+        Route::get('wizard', [\App\Http\Controllers\WizardController::class, 'index']);
+
         Route::get('essences/{essence}', [\App\Http\Controllers\EssenceController::class, 'show'])->name('essence.show');
         Route::get('essences/{essence}/paginate', [\App\Http\Controllers\EssenceController::class, 'paginate']);
         Route::get('essences/{essence}/sub-essences/{subEssence}', [\App\Http\Controllers\SubEssenceController::class, 'show'])->name('sub-essence.show');
