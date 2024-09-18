@@ -17,7 +17,7 @@ class EssenceService
                 ->subEssences()
                 ->where('sort', '>', $lastSubEssence->sort)
                 ->orderBy('sort')->orderBy('id')
-                ->take(15)
+                ->take(30)
                 ->get();
         }
 
@@ -26,7 +26,7 @@ class EssenceService
             ->where('sort', '<', $lastSubEssence->sort)
             ->orderByDesc('sort')
             ->orderByDesc('id')
-            ->take(15)
+            ->take(30)
             ->get()
             ->sortBy([
                 ['sort', 'asc'],

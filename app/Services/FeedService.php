@@ -18,9 +18,9 @@ class FeedService
         }
 
         return match ($data['type']) {
-            'popular' => $productsQuery->where('popular', 1)->take(15)->get(),
-            'new' => $productsQuery->where('new', 1)->take(15)->get(),
-            default => $productsQuery->take(15)->get(),
+            'popular' => $productsQuery->where('popular', 1)->take(30)->get(),
+            'new' => $productsQuery->where('new', 1)->take(30)->get(),
+            default => $productsQuery->take(30)->get(),
         };
     }
 
@@ -36,7 +36,7 @@ class FeedService
         };
 
         return $productRequest
-            ->skip(($page - 1) * 15)
+            ->skip(($page - 1) * 30)
             ->take(15)
             ->get()->values();
     }

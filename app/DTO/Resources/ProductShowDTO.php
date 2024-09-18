@@ -4,6 +4,7 @@ namespace App\DTO\Resources;
 
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
+use App\DTO\Resources\EssenceDTO;
 
 /**
  * @OA\Schema(
@@ -38,4 +39,16 @@ class ProductShowDTO extends Data
      * )
      */
     public ?AiPromptDTO $promptDetail;
+
+    /**
+     * @var array
+     *
+     * @OA\Property (
+     *     format="array",
+     *
+     *     @OA\Items(ref="#/components/schemas/ShortEssence")
+     * )
+     */
+    #[DataCollectionOf(EssenceShortDTO::class)]
+    public iterable $essences;
 }

@@ -15,7 +15,7 @@ class SubEssenceService
                 ->products()
                 ->orderBy('sort')
                 ->orderBy('id')
-                ->skip(($page - 1) * 15)
+                ->skip(($page - 1) * 30)
                 ->take(15)
                 ->get()->values();
     }

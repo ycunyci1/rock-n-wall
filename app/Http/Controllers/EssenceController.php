@@ -54,7 +54,7 @@ class EssenceController extends BaseApiController
      */
     public function show(Essence $essence)
     {
-        return response()->json(SubEssenceDTO::collect($essence->subEssences()->orderBy('sort')->orderBy('id')->take(15)->get()));
+        return response()->json(SubEssenceDTO::collect($essence->subEssences()->orderBy('sort')->orderBy('id')->take(30)->get()));
     }
 
     /**
