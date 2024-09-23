@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "orchid/platform": "^14.19",
+        "php-ffmpeg/php-ffmpeg": "^1.2",
         "spatie/laravel-data": "^4.7"
     },
     "require-dev": {
