@@ -16,7 +16,7 @@ class SubEssenceService
                 ->orderBy('sort')
                 ->orderBy('id')
                 ->skip(($page - 1) * 30)
-                ->take(15)
+                ->take(30)
                 ->get()->values();
     }
 }

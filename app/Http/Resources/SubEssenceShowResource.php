@@ -20,7 +20,7 @@ class SubEssenceShowResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'image' => $this->mainProduct->image,
-            'products' => ProductResource::collection($this->products()->orderBy('sort')->orderBy('id')->take(15)->get()),
+            'products' => ProductResource::collection($this->products()->orderBy('sort')->orderBy('id')->take(30)->get()),
         ];
     }
 }

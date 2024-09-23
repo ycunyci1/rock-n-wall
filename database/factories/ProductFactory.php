@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\actions\TempGetRandomImageAction;
+use App\Services\ImageService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Str;
 
@@ -19,12 +20,16 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         $live = fake()->boolean(30);
+        $pathToGif = $live ? TempGetRandomImageAction::gif() : null;
+
         return [
             'name' => ucfirst(fake('ru_RU')->word),
             'vip' => fake()->boolean(),
             'live' => $live,
-            'image' => config('app.url') . TempGetRandomImageAction::img(),
-            'live_image' => $live ? config('app.url') . TempGetRandomImageAction::gif() : null,
+            'image' => !$live
+                ? config('app.url') . TempGetRandomImageAction::img()
+                : ImageService::getPreviewForGif($pathToGif),
+            'live_image' => $live ? config('app.url') . $pathToGif : null,
             'new' => fake()->boolean(),
             'popular' => fake()->boolean(),
             'sort' => rand(1, 10000),

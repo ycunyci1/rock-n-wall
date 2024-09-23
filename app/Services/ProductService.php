@@ -21,7 +21,7 @@ class ProductService
 
     public function getLiveImages(): Collection
     {
-        return Product::query()->where('live', 1)->take(15)->get();
+        return Product::query()->where('live', 1)->take(30)->get();
     }
 
     public function getEssences(): AnonymousResourceCollection

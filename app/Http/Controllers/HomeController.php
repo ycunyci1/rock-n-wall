@@ -36,7 +36,7 @@ class HomeController extends BaseApiController
     {
         return response()->json(
             new MainPageDTO(
-                liveImages: ProductDTO::collect(Product::query()->where('live', 1)->take(15)->get()),
+                liveImages: ProductDTO::collect(Product::query()->where('live', 1)->take(30)->get()),
                 essences: EssenceDTO::collect(Essence::with('subEssences')->get())
             )
         );
