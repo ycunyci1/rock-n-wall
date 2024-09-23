@@ -35,6 +35,7 @@ Route::group(['prefix' => 'v1'], function () {
         Route::get('essences/{essence}/sub-essences/{subEssence}/paginate', [\App\Http\Controllers\SubEssenceController::class, 'paginate']);
         Route::get('essences/{essence}/sub-essences/{subEssence}/products/{product}', [\App\Http\Controllers\ProductController::class, 'show']);
         Route::get('products/{product}', [\App\Http\Controllers\ProductController::class, 'shortShow']);
+        Route::get('live-images', [\App\Http\Controllers\ProductController::class, 'liveImages']);
 
         Route::prefix('favorites')->group(function () {
             Route::get('', [FavoriteController::class, 'index']);

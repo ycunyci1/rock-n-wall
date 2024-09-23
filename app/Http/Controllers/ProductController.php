@@ -12,6 +12,7 @@ use App\Models\Essence;
 use App\Models\Product;
 use App\Models\SubEssence;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ProductController extends BaseApiController
 {
@@ -122,5 +123,51 @@ class ProductController extends BaseApiController
                 'promptDetail' => $product->aiPrompt ? AiPromptDTO::from($product->aiPrompt->toArray()) : null
             ]
         ));
+    }
+
+    /**
+     * @OA\Get(
+     *     path="/api/v1/live-images",
+     *     summary="Получить живые обои",
+     *     tags={"Pages"},
+     *
+     *     @OA\Parameter(
+     *          name="page",
+     *          description="Страница пагинации",
+     *          in="query",
+     *          required=false,
+     *          example="2",
+     *
+     *          @OA\Schema(
+     *              type="integer",
+     *          ),
+     *     ),
+     *     @OA\Response(
+     *          response=200,
+     *          description="Полученные живые обои",
+     *
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/Product")
+     *          )
+     *     ),
+     *     security={
+     *       {"auth_api": {}}
+     *     }
+     * )
+     */
+    public function liveImages(Request $request)
+    {
+        if ($request->get('page')) {
+            $productsQuery = Product::where('live', 1)->orderBy('sort')->orderBy('id');
+            $page = $request->get('page');
+            $products = $productsQuery
+                ->skip(($page - 1) * 30)
+                ->take(30)
+                ->get();
+        }else {
+            $products = Product::where('live', 1)->orderBy('sort')->orderBy('id')->take(30)->get();
+        }
+        return ProductDTO::collect($products);
     }
 }
