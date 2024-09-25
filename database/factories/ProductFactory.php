@@ -28,7 +28,7 @@ class ProductFactory extends Factory
             'live' => $live,
             'image' => !$live
                 ? config('app.url') . TempGetRandomImageAction::img()
-                : ImageService::getPreviewForGif($pathToGif),
+                : config('app.url') . ImageService::getPreviewForGif($pathToGif),
             'live_image' => $live ? config('app.url') . $pathToGif : null,
             'new' => fake()->boolean(),
             'popular' => fake()->boolean(),

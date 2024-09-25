@@ -25,6 +25,6 @@ class ImageService
             ->frame(TimeCode::fromSeconds(1))
             ->save($outputFilePath);
 
-        return $outputFilePath;
+        return str_replace('/var/www/html/public', '', $outputFilePath);
     }
 }

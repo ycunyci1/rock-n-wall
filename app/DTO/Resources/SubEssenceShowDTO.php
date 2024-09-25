@@ -55,6 +55,6 @@ class SubEssenceShowDTO extends Data
         public iterable $products
 
     ) {
-        $this->products = ProductDTO::collect($this->products->take(30));
+        $this->products = ProductDTO::collect($this->products->where('live', 0)->take(30));
     }
 }

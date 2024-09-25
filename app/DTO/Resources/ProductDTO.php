@@ -37,6 +37,11 @@ class ProductDTO extends Data
          * @OA\Property(format="string", example="http://domain/storage/images/black-car.jpg")
          */
         public string $image,
+
+        /**
+         * @OA\Property(format="string", example="http://domain/storage/images/black-car.gif")
+         */
+        public ?string $live_image,
     )
     {
 

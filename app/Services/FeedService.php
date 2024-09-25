@@ -10,7 +10,7 @@ class FeedService
 {
     public function show(array $data)
     {
-        $productsQuery = Product::query()->orderBy('sort')->orderBy('id');
+        $productsQuery = Product::where('live', 0)->orderBy('sort')->orderBy('id');
         if (isset($data['q'])) {
             $searchTerm = $data['q'];
             $productsQuery->where('name', 'LIKE', "%$searchTerm%")
@@ -27,7 +27,7 @@ class FeedService
     public function paginate(array $data): Collection
     {
         $page = $data['page'] ?? 1;
-        $productBaseRequest = Product::orderBy('sort')->orderBy('id');
+        $productBaseRequest = Product::where('live', 0)->orderBy('sort')->orderBy('id');
 
         $productRequest = match ($data['type']) {
             'popular' => $productBaseRequest->where('popular', 1),

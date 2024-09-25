@@ -13,6 +13,7 @@ class SubEssenceService
         $page = $data['page'] ?? 1;
             return $subEssence
                 ->products()
+                ->where('live', 0)
                 ->orderBy('sort')
                 ->orderBy('id')
                 ->skip(($page - 1) * 30)
