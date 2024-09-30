@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\BaseUser\BaseUserListScreen;
 use App\Orchid\Screens\Essence\EssenceEditScreen;
 use App\Orchid\Screens\Essence\EssenceListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
@@ -54,6 +55,12 @@ Route::screen('product/{product?}', ProductEditScreen::class)
     ->breadcrumbs(fn (Trail $trail) => $trail
         ->parent('platform.product.list')
         ->push(__('Images edit'), route('platform.product.edit')));
+
+Route::screen('base-users', BaseUserListScreen::class)
+    ->name('platform.base-users.list')
+    ->breadcrumbs(fn (Trail $trail) => $trail
+        ->parent('platform.index')
+        ->push(__('Users'), route('platform.base-users.list')));
 
 //Essence
 Route::screen('essences', EssenceListScreen::class)

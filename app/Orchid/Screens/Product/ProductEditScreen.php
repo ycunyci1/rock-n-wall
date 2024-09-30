@@ -4,6 +4,7 @@ namespace App\Orchid\Screens\Product;
 
 use App\Models\Product;
 use App\Orchid\Layouts\Product\ProductEditLayout;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Screen;
@@ -74,7 +75,13 @@ class ProductEditScreen extends Screen
 
     public function create(Request $request)
     {
-        $product = Product::query()->create($request->get('product'));
+        $productInfo = $request->get('product');
+        $live = $productInfo['live'] ?? 0;
+        if ($live) {
+            $productInfo['live_image'] = $productInfo['image'];
+            $productInfo['image'] = ImageService::getPreviewForGif(str_replace(config('app.url') . '/storage/', '/app/public/', $productInfo['live_image']));
+        }
+        $product = Product::query()->create($productInfo);
 
         $product->subEssences()->attach($request->get('subEssences'));
         $product->tags()->attach($request->get('tags'));
@@ -86,7 +93,18 @@ class ProductEditScreen extends Screen
 
     public function update(Product $product, Request $request)
     {
-        $product->fill($request->get('product'))->save();
+        $productInfo = $request->get('product');
+        $live = $productInfo['live'] ?? 0;
+        if ($live) {
+            if (str_contains($productInfo['image'], '.gif')) {
+                $productInfo['live_image'] = $productInfo['image'];
+                $productInfo['image'] = ImageService::getPreviewForGif(str_replace(config('app.url') . '/storage/', '/app/public/', $productInfo['live_image']));
+            }else {
+                unset($productInfo['image']);
+                unset($productInfo['live_image']);
+            }
+        }
+        $product->fill($productInfo)->save();
 
         $product->subEssences()->detach();
         $product->subEssences()->attach($request->get('subEssences'));

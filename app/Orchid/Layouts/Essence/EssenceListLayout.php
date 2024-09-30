@@ -26,11 +26,6 @@ class EssenceListLayout extends Table
      */
     protected function columns(): iterable
     {
-        $displayTypeMap = [
-            0 => 'horizontal',
-            1 => 'vertical',
-        ];
-
         return [
             TD::make('name', 'Название')
                 ->width(350)
@@ -48,8 +43,8 @@ class EssenceListLayout extends Table
 
             TD::make('display_type', 'Тип отображения')
                 ->width(100)
-                ->render(function (Essence $essence) use ($displayTypeMap) {
-                    return Link::make(isset($displayTypeMap[$essence->display_type]) ? $displayTypeMap[$essence->display_type] : $essence->display_type)
+                ->render(function (Essence $essence) {
+                    return Link::make($essence->display_type)
                         ->route('platform.essence.edit', $essence);
                 }),
         ];

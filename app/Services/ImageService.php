@@ -19,7 +19,7 @@ class ImageService
         $outputFilePath = $outputPath . '/' . uniqid('preview_', true) . '.jpg';
 
         $ffmpeg = FFMpeg::create();
-        $video = $ffmpeg->open(public_path($gifPath));
+        $video = $ffmpeg->open(storage_path($gifPath));
 
         $video
             ->frame(TimeCode::fromSeconds(1))
