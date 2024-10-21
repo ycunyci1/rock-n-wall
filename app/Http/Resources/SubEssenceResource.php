@@ -17,7 +17,7 @@ class SubEssenceResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->mainProduct->image,
+            'image' => $this->image,
             'count' => $this->products->count(),
         ];
     }

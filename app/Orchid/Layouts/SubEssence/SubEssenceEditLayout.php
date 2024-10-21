@@ -5,6 +5,7 @@ namespace App\Orchid\Layouts\SubEssence;
 use App\Models\Essence;
 use App\Models\Product;
 use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Picture;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Rows;
 use Orchid\Screen\TD;
@@ -33,11 +34,9 @@ class SubEssenceEditLayout extends Rows
                 ->required()
                 ->title('Название'),
 
-            Select::make('subEssence.main_product_id')
-                ->title('Основное изображение')
-                ->fromModel(Product::class, 'name', 'id')
+            Picture::make('subEssence.image')
                 ->required()
-                ->empty('Не выбрано'),
+                ->title('Изображение'),
 
             Select::make('subEssence.essence_id')
                 ->required()

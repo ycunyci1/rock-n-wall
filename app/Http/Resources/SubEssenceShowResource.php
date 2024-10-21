@@ -19,7 +19,7 @@ class SubEssenceShowResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'image' => $this->mainProduct->image,
+            'image' => $this->image,
             'products' => ProductResource::collection($this->products()->orderBy('sort')->orderBy('id')->take(30)->get()),
         ];
     }

@@ -26,6 +26,6 @@ class ProductService
 
     public function getEssences(): AnonymousResourceCollection
     {
-        return MainPageEssenceResource::collection(Essence::with('subEssences.products', 'subEssences.mainProduct')->get());
+        return MainPageEssenceResource::collection(Essence::with('subEssences.products')->get());
     }
 }

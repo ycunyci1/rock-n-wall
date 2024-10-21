@@ -34,12 +34,12 @@ class SubEssenceListLayout extends Table
                         ->route('platform.subEssence.edit', $subEssence);
                 }),
 
-            TD::make('main_product_id', 'Основное изображение')
+            TD::make('image', 'Основное изображение')
                 ->width(50)
                 ->render(function (SubEssence $subEssence) {
                     $link = route('platform.subEssence.edit', $subEssence);
 
-                    return "<a href=$link><img src={$subEssence->mainProduct->image} width='150' height='150'></a>";
+                    return "<a href=$link><img src=$subEssence->image width='150' height='150'></a>";
                 }),
             TD::make('essence_id', 'Раздел')
                 ->width(50)

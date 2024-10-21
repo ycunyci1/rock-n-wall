@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Collection;
+use Orchid\Attachment\Attachable;
 
 /**
  * Class SubEssence
@@ -25,12 +26,11 @@ use Illuminate\Support\Collection;
  * @property string|null $displayType
  * @property Essence|null $essence
  * @property Collection|Product[] $products
- * @property Product|null $mainProduct
  * @property Collection|Favorite[] $favorites
  */
 class SubEssence extends Model
 {
-    use HasFactory;
+    use HasFactory, Attachable;
 
     protected $guarded = [];
 
@@ -44,11 +44,6 @@ class SubEssence extends Model
         return $this->belongsToMany(Product::class);
     }
 
-    public function mainProduct(): BelongsTo
-    {
-        return $this->belongsTo(Product::class, 'main_product_id', 'id');
-    }
-
     public function favorites(): MorphMany
     {
         return $this->morphMany(Favorite::class, 'favoritable');
@@ -59,10 +54,10 @@ class SubEssence extends Model
         return $this->products->count();
     }
 
-    public function getImageAttribute()
-    {
-        return $this->mainProduct->image;
-    }
+//    public function getImageAttribute()
+//    {
+//        return $this->image;
+//    }
 
     public function getUrlAttribute(): string
     {

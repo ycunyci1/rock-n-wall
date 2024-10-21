@@ -18,7 +18,7 @@ class ProductInfoResource extends JsonResource
             'subEssenceId' => $this->id,
             'essence' => $this->essence->name,
             'subEssenceName' => $this->name,
-            'mainImage' => $this->mainProduct->image,
+            'mainImage' => $this->image,
             'count' => $this->products->count(),
         ];
     }
