@@ -30,20 +30,25 @@ class SubEssenceEditLayout extends Rows
     {
         return [
             Input::make('subEssence.name')
+                ->required()
                 ->title('Название'),
 
             Select::make('subEssence.main_product_id')
                 ->title('Основное изображение')
                 ->fromModel(Product::class, 'name', 'id')
+                ->required()
                 ->empty('Не выбрано'),
 
             Select::make('subEssence.essence_id')
+                ->required()
                 ->title('Раздел')
                 ->fromModel(Essence::class, 'name', 'id')
                 ->empty('Не выбрано'),
 
             Input::make('subEssence.sort')
+                ->required()
                 ->title('Сортировка')
+                ->value(50)
                 ->type('number'),
         ];
     }

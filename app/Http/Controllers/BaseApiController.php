@@ -31,6 +31,11 @@ namespace App\Http\Controllers;
  *      description="Debug test server"
  * )
  *
+ * @OA\Server(
+ *      url="https://wallpapers-ddone.com",
+ *      description="Production server"
+ * )
+ *
  * @OA\SecurityScheme(
  *     type="apiKey",
  *     in="header",

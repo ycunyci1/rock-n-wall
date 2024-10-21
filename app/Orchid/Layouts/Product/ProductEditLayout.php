@@ -31,6 +31,7 @@ class ProductEditLayout extends Rows
     {
         return [
             Input::make('product.name')
+                ->required()
                 ->title('Название'),
 
             CheckBox::make('product.vip')
@@ -42,6 +43,7 @@ class ProductEditLayout extends Rows
                 ->sendTrueOrFalse(),
 
             Picture::make('product.image')
+                ->required()
                 ->title('Изображение'),
 
             CheckBox::make('product.new')
@@ -54,6 +56,8 @@ class ProductEditLayout extends Rows
 
             Input::make('product.sort')
                 ->title('Сортировка')
+                ->value(50)
+                ->required()
                 ->help('Чем меньше число - тем выше изображение в списке')
                 ->type('number'),
 
