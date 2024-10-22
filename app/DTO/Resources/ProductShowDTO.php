@@ -41,6 +41,11 @@ class ProductShowDTO extends Data
     public ?AiPromptDTO $promptDetail;
 
     /**
+     * @OA\Property(format="string", example="Cats")
+     */
+    public string $share_url;
+
+    /**
      * @var array
      *
      * @OA\Property (

@@ -18,4 +18,4 @@ Route::get('/', function () {
     return redirect('/admin');
 });
 
-Route::get('wallpaper/{subEssenceId}/{productId}', DeepLinkController::class);
+Route::get('wallpaper/{subEssenceId}/{productId}', DeepLinkController::class)->name('deep-link');

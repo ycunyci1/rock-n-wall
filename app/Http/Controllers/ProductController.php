@@ -75,6 +75,7 @@ class ProductController extends BaseApiController
     {
         return response()->json(ProductShowDTO::from([
                 'product' => ProductDTO::from($product->toArray()),
+                'share_url' => route('deep-link', ['subEssenceId' => $subEssence->id, 'productId' => $product->id]),
                 'info' => ProductInfoDTO::collect($product->subEssences),
                 'promptDetail' => $product->aiPrompt ? AiPromptDTO::from($product->aiPrompt->toArray()) : null
             ]
@@ -117,6 +118,7 @@ class ProductController extends BaseApiController
         $subEssences = $product->subEssences;
         $essences = $subEssences->map(fn($subEssence) => $subEssence->essence->load('subEssences'));
         return response()->json(ProductShowDTO::from([
+                'share_url' => route('deep-link', ['subEssenceId' => $subEssences->first()->id, 'productId' => $product->id]),
                 'product' => ProductDTO::from($product->toArray()),
                 'info' => ProductInfoDTO::collect($product->subEssences),
                 'essences' => EssenceShortDTO::collect($essences),
