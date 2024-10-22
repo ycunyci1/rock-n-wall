@@ -43,6 +43,8 @@ class ProductEditLayout extends Rows
                 ->sendTrueOrFalse(),
 
             Picture::make('product.image')
+                ->maxFileSize(10)
+                ->acceptedFiles('.jpeg, .jpg, .png, .gif')
                 ->required()
                 ->title('Изображение'),
 
