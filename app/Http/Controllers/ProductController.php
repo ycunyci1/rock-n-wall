@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DTO\Resources\AiPromptDTO;
 use App\DTO\Resources\ProductDTO;
 use App\DTO\Resources\ProductInfoDTO;
+use App\DTO\Resources\ProductPictureInformation;
 use App\DTO\Resources\ProductShowDTO;
 use App\DTO\Resources\EssenceDTO;
 use App\DTO\Resources\EssenceShortDTO;
@@ -75,7 +76,12 @@ class ProductController extends BaseApiController
     {
         return response()->json(ProductShowDTO::from([
                 'product' => ProductDTO::from($product->toArray()),
-                'share_url' => route('deep-link', ['subEssenceId' => $subEssence->id, 'productId' => $product->id]),
+                'share_url' => !$product->live ? route('deep-link', ['subEssenceId' => $subEssence->id, 'productId' => $product->id])
+                    : route('live-deep-link', ['productId' => $product->id]),
+                'pictureInformationModal' => new ProductPictureInformation(
+                    author: $product->author,
+                    source: $product->source,
+                ),
                 'info' => ProductInfoDTO::collect($product->subEssences),
                 'promptDetail' => $product->aiPrompt ? AiPromptDTO::from($product->aiPrompt->toArray()) : null
             ]
@@ -118,8 +124,13 @@ class ProductController extends BaseApiController
         $subEssences = $product->subEssences;
         $essences = $subEssences->map(fn($subEssence) => $subEssence->essence->load('subEssences'));
         return response()->json(ProductShowDTO::from([
-                'share_url' => route('deep-link', ['subEssenceId' => $subEssences->first()->id, 'productId' => $product->id]),
+                'share_url' => !$product->live ? route('deep-link', ['subEssenceId' => $subEssences->first()->id ?? SubEssence::first()->id, 'productId' => $product->id])
+                        : route('live-deep-link', ['productId' => $product->id]),
                 'product' => ProductDTO::from($product->toArray()),
+                'pictureInformationModal' => new ProductPictureInformation(
+                    author: $product->author,
+                    source: $product->source,
+                ),
                 'info' => ProductInfoDTO::collect($product->subEssences),
                 'essences' => EssenceShortDTO::collect($essences),
                 'promptDetail' => $product->aiPrompt ? AiPromptDTO::from($product->aiPrompt->toArray()) : null

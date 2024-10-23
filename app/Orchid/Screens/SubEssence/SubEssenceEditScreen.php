@@ -31,7 +31,7 @@ class SubEssenceEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->subEssence->exists ? 'Редактировать категорию' : 'Создать новую категорию';
+        return $this->subEssence->exists ? 'Редактировать подраздел' : 'Создать новый подраздел';
     }
 
     /**

@@ -29,9 +29,11 @@ class EssenceEditLayout extends Rows
     {
         return [
             Input::make('essence.name')
+                ->required()
                 ->title('Название'),
 
             Input::make('essence.sort')
+                ->required()
                 ->title('Сортировка'),
 
             Select::make('essence.display_type')

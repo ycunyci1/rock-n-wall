@@ -43,7 +43,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->icon('bs.collection')
                 ->route('platform.essence.list'),
 
-            Menu::make('Категории')
+            Menu::make('Подразделы')
                 ->icon('bs.collection')
                 ->route('platform.subEssence.list'),
 

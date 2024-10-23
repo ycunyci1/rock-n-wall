@@ -26,7 +26,7 @@ class SubEssenceListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Список категорий';
+        return 'Список подразделов';
     }
 
     /**

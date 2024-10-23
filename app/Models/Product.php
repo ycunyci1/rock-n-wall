@@ -8,9 +8,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Orchid\Attachment\Attachable;
+use Orchid\Filters\Filterable;
+
+/**
+ * @property string|null $image
+ */
 
 class Product extends Model
 {
+    use Filterable;
     use Attachable;
     use HasFactory;
 

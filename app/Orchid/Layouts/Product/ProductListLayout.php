@@ -4,6 +4,8 @@ namespace App\Orchid\Layouts\Product;
 
 use App\Models\Product;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -29,18 +31,29 @@ class ProductListLayout extends Table
         return [
             TD::make('name', 'Название')
                 ->width(250)
+                ->filter(Input::make())
                 ->render(function (Product $product) {
                     return Link::make($product->name)
                         ->route('platform.product.edit', $product);
                 }),
             TD::make('vip', 'Vip')
                 ->width(50)
+                ->filter(Select::make()->options([
+                    'Нет' => 'Нет',
+                    'Да' => 'Да'
+                ])
+                    ->empty('Не выбрано')
+                )
                 ->render(function (Product $product) {
                     return Link::make($product->vip ? 'Да' : 'Нет')
                         ->route('platform.product.edit', $product);
                 }),
             TD::make('live', 'Live')
                 ->width(50)
+                ->filter(Select::make()->options([
+                    'Нет' => 'Нет',
+                    'Да' => 'Да'
+                ])->empty('Не выбрано'))
                 ->render(function (Product $product) {
                     return Link::make($product->live ? 'Да' : 'Нет')
                         ->route('platform.product.edit', $product);
@@ -54,11 +67,19 @@ class ProductListLayout extends Table
                 }),
             TD::make('new', 'Новинка')
                 ->width(50)
+                ->filter(Select::make()->options([
+                    'Нет' => 'Нет',
+                    'Да' => 'Да'
+                ])->empty('Не выбрано'))
                 ->render(function (Product $product) {
                     return Link::make($product->new ? 'Да' : 'Нет')
                         ->route('platform.product.edit', $product);
                 }),
             TD::make('popular', 'Популярное')
+                ->filter(Select::make()->options([
+                    'Нет' => 'Нет',
+                    'Да' => 'Да'
+                ])->empty('Не выбрано'))
                 ->width(50)
                 ->render(function (Product $product) {
                     return Link::make($product->popular ? 'Да' : 'Нет')

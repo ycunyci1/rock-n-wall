@@ -41,9 +41,16 @@ class ProductShowDTO extends Data
     public ?AiPromptDTO $promptDetail;
 
     /**
-     * @OA\Property(format="string", example="Cats")
+     * @OA\Property(format="string", example="https://domain.com/deep-link")
      */
     public string $share_url;
+
+    /**
+     * @OA\Property (
+     *     ref="#/components/schemas/PictureInforamtionModal"
+     * )
+     */
+    public ?ProductPictureInformation $pictureInformationModal;
 
     /**
      * @var array

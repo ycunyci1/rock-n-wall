@@ -17,7 +17,16 @@ class ProductListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'products' => Product::query()->paginate(15),
+            'products' => Product::query()
+                ->filters()
+                ->filtersApply([
+                    \App\Orchid\Filters\ProductFilterName::class,
+                    \App\Orchid\Filters\ProductFilterVip::class,
+                    \App\Orchid\Filters\ProductFilterLive::class,
+                    \App\Orchid\Filters\ProductFilterNew::class,
+                    \App\Orchid\Filters\ProductFilterPopular::class,
+                    ])
+                ->paginate(15),
         ];
     }
 

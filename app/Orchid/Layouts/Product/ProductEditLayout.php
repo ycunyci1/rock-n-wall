@@ -74,6 +74,14 @@ class ProductEditLayout extends Rows
                 ->multiple()
                 ->title('Тэги')
                 ->help('Выберите тэги, к которым относится это изображение'),
+
+            Input::make('product.author')
+                ->required()
+                ->title('Автор'),
+
+            Input::make('product.source')
+                ->required()
+                ->title('Источник'),
         ];
     }
 }
