@@ -12,13 +12,24 @@ use Spatie\LaravelData\Data;
  */
 class ProductPictureInformation extends Data
 {
-    /**
-     * @OA\Property(format="string", example="Brain Dude")
-     */
-    public ?string $author = null;
+    public function __construct(
+        /**
+         * @OA\Property(format="string", example="Brain Dude")
+         */
+        public ?string $author = null,
 
-    /**
-     * @OA\Property(format="string", example="pixeles")
-     */
-    public ?string $source = null;
+        /**
+         * @OA\Property(format="string", example="pixeles")
+         */
+        public ?string $source = null,
+
+        /**
+         * @OA\Property(format="string", example="CCO")
+         */
+        public ?string $license = null
+
+
+    )
+    {
+    }
 }

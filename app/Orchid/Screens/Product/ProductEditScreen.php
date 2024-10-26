@@ -77,10 +77,12 @@ class ProductEditScreen extends Screen
     {
         $productInfo = $request->get('product');
         $live = $productInfo['live'] ?? 0;
+        $productInfo['image'] = str_replace(config('app.url'), '', $productInfo['image']);
         if ($live) {
             $productInfo['live_image'] = $productInfo['image'];
-            $productInfo['image'] = config('app.url') . ImageService::getPreviewForGif(str_replace(config('app.url') . '/storage/', '/app/public/', $productInfo['live_image']));
+            $productInfo['image'] = ImageService::getPreviewForGif(str_replace('/storage/', '/app/public/', $productInfo['live_image']));
         }
+
         $product = Product::query()->create($productInfo);
 
         $product->subEssences()->attach($request->get('subEssences'));
@@ -98,7 +100,7 @@ class ProductEditScreen extends Screen
         if ($live) {
             if (str_contains($productInfo['image'], '.gif')) {
                 $productInfo['live_image'] = $productInfo['image'];
-                $productInfo['image'] = config('app.url') . ImageService::getPreviewForGif(str_replace(config('app.url') . '/storage/', '/app/public/', $productInfo['live_image']));
+                $productInfo['image'] = ImageService::getPreviewForGif(str_replace(config('app.url') . '/storage/', '/app/public/', $productInfo['live_image']));
             }else {
                 unset($productInfo['image']);
                 unset($productInfo['live_image']);

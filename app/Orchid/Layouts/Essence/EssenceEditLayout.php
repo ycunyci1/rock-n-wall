@@ -35,10 +35,6 @@ class EssenceEditLayout extends Rows
             Input::make('essence.sort')
                 ->required()
                 ->title('Сортировка'),
-
-            Select::make('essence.display_type')
-                ->title('Тип отображения')
-                ->options(EssenceDisplayTypeEnum::cases()),
         ];
     }
 }

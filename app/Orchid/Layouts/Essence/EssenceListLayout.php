@@ -41,13 +41,6 @@ class EssenceListLayout extends Table
                     return Link::make($essence->sort)
                         ->route('platform.essence.edit', $essence);
                 }),
-
-            TD::make('display_type', 'Тип отображения')
-                ->width(100)
-                ->render(function (Essence $essence) {
-                    return Link::make($essence->display_type == 0 ? EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL->value : EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL->value)
-                        ->route('platform.essence.edit', $essence);
-                }),
         ];
     }
 }

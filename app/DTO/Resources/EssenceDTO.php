@@ -2,6 +2,7 @@
 
 namespace App\DTO\Resources;
 
+use App\Enum\EssenceDisplayTypeEnum;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 
@@ -47,6 +48,7 @@ class EssenceDTO extends Data
         #[DataCollectionOf(SubEssenceDTO::class)]
         public iterable $subEssences)
     {
-        $this->subEssences = SubEssenceDTO::collect($this->subEssences);
+        $this->subEssences = SubEssenceDTO::collect($this->subEssences->sortBy('sort')->values());
+        $this->displayType = $this->displayType == '0' ? EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL->value : EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL->value;;
     }
 }

@@ -74,6 +74,12 @@ class ProductController extends BaseApiController
      */
     public function show(Essence $essence, SubEssence $subEssence, Product $product): JsonResponse
     {
+        $subEssences = $product->subEssences;
+        $essences = $subEssences->map(fn($subEssence) => $subEssence->essence->load('subEssences'));
+        $showCount = $product->show_count;
+        $product->update([
+            'show_count' => $showCount + 1
+        ]);
         return response()->json(ProductShowDTO::from([
                 'product' => ProductDTO::from($product->toArray()),
                 'share_url' => !$product->live ? route('deep-link', ['subEssenceId' => $subEssence->id, 'productId' => $product->id])
@@ -81,9 +87,11 @@ class ProductController extends BaseApiController
                 'pictureInformationModal' => new ProductPictureInformation(
                     author: $product->author,
                     source: $product->source,
+                    license: $product->license,
                 ),
                 'info' => ProductInfoDTO::collect($product->subEssences),
-                'promptDetail' => $product->aiPrompt ? AiPromptDTO::from($product->aiPrompt->toArray()) : null
+                'promptDetail' => $product->aiPrompt ? AiPromptDTO::from($product->aiPrompt->toArray()) : null,
+                'essences' => EssenceShortDTO::collect($essences),
             ]
         ));
     }
@@ -123,6 +131,10 @@ class ProductController extends BaseApiController
     {
         $subEssences = $product->subEssences;
         $essences = $subEssences->map(fn($subEssence) => $subEssence->essence->load('subEssences'));
+        $showCount = $product->show_count;
+        $product->update([
+            'show_count' => ++$showCount
+        ]);
         return response()->json(ProductShowDTO::from([
                 'share_url' => !$product->live ? route('deep-link', ['subEssenceId' => $subEssences->first()->id ?? SubEssence::first()->id, 'productId' => $product->id])
                         : route('live-deep-link', ['productId' => $product->id]),
@@ -130,6 +142,7 @@ class ProductController extends BaseApiController
                 'pictureInformationModal' => new ProductPictureInformation(
                     author: $product->author,
                     source: $product->source,
+                    license: $product->license,
                 ),
                 'info' => ProductInfoDTO::collect($product->subEssences),
                 'essences' => EssenceShortDTO::collect($essences),

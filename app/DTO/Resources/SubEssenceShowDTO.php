@@ -2,6 +2,7 @@
 
 namespace App\DTO\Resources;
 
+use App\Enum\EssenceDisplayTypeEnum;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Data;
 
@@ -56,5 +57,7 @@ class SubEssenceShowDTO extends Data
 
     ) {
         $this->products = ProductDTO::collect($this->products->where('live', 0)->take(30));
+        $this->displayType = $this->displayType == '0' ? EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL->value : EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL->value;
+        $this->image = $this->image ? config('app.url') . $this->image : null;
     }
 }

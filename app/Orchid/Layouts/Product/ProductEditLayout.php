@@ -82,6 +82,10 @@ class ProductEditLayout extends Rows
             Input::make('product.source')
                 ->required()
                 ->title('Источник'),
+
+            Input::make('product.license')
+                ->required()
+                ->title('Лицензия'),
         ];
     }
 }

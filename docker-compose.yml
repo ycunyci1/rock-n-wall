@@ -33,18 +33,26 @@ services:
     networks:
       - web
     restart: always
-
-  db:
-    image: mariadb:11.4
-    restart: always
+  scheduler:
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+    command: /bin/sh -c "while :; do php /var/www/html/artisan schedule:run; sleep 60; done"
     volumes:
-      - ./docker/mysql/data:/var/lib/mysql
-      - ./docker/mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
-      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./:/var/www/html
+    depends_on:
+      - app
+    networks:
+      - web
+  db:
+    image: library/mariadb:11.4
+    volumes:
+      - wall_db_data:/var/lib/mysql
     environment:
-      - MARIADB_ROOT_PASSWORD=root
-      - MARIADB_ROOT_HOST=%
-      - MARIADB_DATABASE=wall
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB_DATABASE}
     ports:
       - "3306:3306"
     container_name: wall_db
@@ -60,7 +68,9 @@ services:
     networks:
       - web
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 12h & wait $${!}; certbot renew; done'"
-
+volumes:
+  wall_db_data:
+    driver: local
 networks:
   web:
     driver: bridge

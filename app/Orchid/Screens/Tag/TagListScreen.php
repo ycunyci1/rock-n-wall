@@ -17,7 +17,9 @@ class TagListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'tags' => Tag::query()->paginate(15),
+            'tags' => Tag::query()
+                ->orderByDesc('id')
+                ->paginate(15),
         ];
     }
 

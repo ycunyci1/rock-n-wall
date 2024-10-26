@@ -17,7 +17,9 @@ class EssenceListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'essences' => Essence::query()->paginate(15),
+            'essences' => Essence::query()
+                ->orderByDesc('id')
+                ->paginate(15),
         ];
     }
 

@@ -13,7 +13,6 @@ use Orchid\Filters\Filterable;
 /**
  * @property string|null $image
  */
-
 class Product extends Model
 {
     use Filterable;

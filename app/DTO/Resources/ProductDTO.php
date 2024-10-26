@@ -44,6 +44,7 @@ class ProductDTO extends Data
         public ?string $live_image,
     )
     {
-
+        $this->image = config('app.url') . $this->image;
+        $this->live_image = $this->live ? config('app.url') . $this->live_image : null;
     }
 }

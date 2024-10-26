@@ -2,6 +2,7 @@
 
 namespace App\DTO\Resources;
 
+use App\Enum\EssenceDisplayTypeEnum;
 use Spatie\LaravelData\Data;
 
 /**
@@ -12,37 +13,34 @@ use Spatie\LaravelData\Data;
  */
 class SubEssenceDTO extends Data
 {
-    /**
-     * @OA\Property(format="string", example="123")
-     */
-    public int $id;
+    public function __construct(
+        /**
+         * @OA\Property(format="string", example="123")
+         */
+        public int    $id,
 
-    /**
-     * @OA\Property(format="string", example="Cats")
-     */
-    public string $name;
+        /**
+         * @OA\Property(format="string", example="Cats")
+         */
+        public string $name,
 
-    /**
-     * @OA\Property(format="string", example="http://domain/storage/images/cats.jpg")
-     */
-    public string $image;
+        /**
+         * @OA\Property(format="integer", example="15")
+         */
+        public int    $productsCount,
 
-    /**
-     * @OA\Property(format="integer", example="15")
-     */
-    public int $productsCount;
+        /**
+         * @OA\Property(format="string", example="horizontal/vertical")
+         */
+        public string $displayType,
 
-    /**
-     * @OA\Property(format="string", example="15")
-     */
-    public string $displayType;
-
-    public function __construct(int $id, string $name, string $image, int $productsCount, string $displayType)
+        /**
+         * @OA\Property(format="string", example="http://domain/storage/images/cats.jpg")
+         */
+        public ?string $image = null,
+    )
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->image = $image;
-        $this->productsCount = $productsCount;
-        $this->displayType = $displayType;
+        $this->displayType = $this->displayType == '0' ? EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL->value : EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL->value;
+        $this->image = $this->image ? config('app.url') . $this->image : null;
     }
 }

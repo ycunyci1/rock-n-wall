@@ -35,5 +35,6 @@ class EssenceShortDTO extends Data
         public string $displayType,
     )
     {
+        $this->displayType = $this->displayType == '0' ? 'horizontal' : 'vertical';
     }
 }

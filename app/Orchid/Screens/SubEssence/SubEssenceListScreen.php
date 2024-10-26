@@ -17,7 +17,9 @@ class SubEssenceListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'subEssences' => SubEssence::query()->paginate(15),
+            'subEssences' => SubEssence::query()
+                ->orderByDesc('id')
+                ->paginate(15),
         ];
     }
 

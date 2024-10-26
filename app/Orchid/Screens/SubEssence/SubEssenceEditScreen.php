@@ -73,7 +73,9 @@ class SubEssenceEditScreen extends Screen
 
     public function create(Request $request)
     {
-        SubEssence::query()->create($request->get('subEssence'));
+        $subEssenceData = $request->get('subEssence');
+        $subEssenceData['image'] = str_replace(config('app.url'), '', $subEssenceData['image']);
+        SubEssence::query()->create($subEssenceData);
 
         Toast::info('You have successfully created a category.');
 
@@ -82,7 +84,9 @@ class SubEssenceEditScreen extends Screen
 
     public function update(SubEssence $subEssence, Request $request)
     {
-        $subEssence->fill($request->get('subEssence'))->save();
+        $subEssenceData = $request->get('subEssence');
+        $subEssenceData['image'] = str_replace(config('app.url'), '', $subEssenceData['image']);
+        $subEssence->fill($subEssenceData)->save();
 
         Toast::info('You have successfully updated a category.');
 
