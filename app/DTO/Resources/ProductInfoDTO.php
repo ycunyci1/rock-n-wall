@@ -36,7 +36,7 @@ class ProductInfoDTO extends Data
         /**
          * @OA\Property(format="string", example="http://domain/storage/images/black-car.jpg")
          */
-        public string $image,
+        public ?string $image = null,
 
         /**
          * @OA\Property(format="integer", example="Animals")
@@ -44,6 +44,6 @@ class ProductInfoDTO extends Data
         public int    $productsCount
     )
     {
-        $this->image = config('app.url') . $this->image;
+        $this->image = $this->image ? config('app.url') . $this->image : null;
     }
 }
