@@ -62,8 +62,8 @@ services:
   certbot:
     image: certbot/certbot
     volumes:
-      - ./docker/nginx/ssl:/etc/letsencrypt
-      - ./docker/nginx/ssl-data:/var/lib/letsencrypt
+      - ./docker/nginx/prod/ssl:/etc/letsencrypt
+      - ./docker/nginx/prod/ssl-data:/var/lib/letsencrypt
       - ./:/var/www/html
     networks:
       - web
