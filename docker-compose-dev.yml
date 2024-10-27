@@ -1,0 +1,80 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"   # Перенаправление внешнего порта 8080 на внутренний 80 для HTTP
+      - "8443:443"  # Перенаправление внешнего порта 8443 на внутренний 443 для HTTPS
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/ssl:/etc/letsencrypt
+      - ./docker/nginx/ssl-data:/var/lib/letsencrypt
+      - ./:/var/www/html
+      - ./docker/nginx/logs/nginx:/var/log/nginx
+      - ./docker/socket:/socket
+    container_name: wall_nginx
+    depends_on:
+      - app
+    networks:
+      - web
+    restart: always
+
+  app:
+    build:
+      context: ./docker/app
+      dockerfile: docker/app/prod/Dockerfile
+    volumes:
+      - ./:/var/www/html
+      - ./docker/socket:/socket
+    container_name: wall_app
+    depends_on:
+      - db
+    networks:
+      - web
+    restart: always
+
+  scheduler:
+    build:
+      context: ./docker/app
+      dockerfile: docker/app/prod/Dockerfile
+    command: /bin/sh -c "while :; do php /var/www/html/artisan schedule:run; sleep 60; done"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - app
+    networks:
+      - web
+
+  db:
+    image: library/mariadb:11.4
+    volumes:
+      - wall_db_data:/var/lib/mysql
+    environment:
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB_DATABASE}
+    ports:
+      - "3307:3306"  # Перенаправление внешнего порта 3307 на внутренний 3306
+    container_name: wall_db
+    networks:
+      - web
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./docker/nginx/ssl:/etc/letsencrypt
+      - ./docker/nginx/ssl-data:/var/lib/letsencrypt
+      - ./:/var/www/html
+    networks:
+      - web
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 12h & wait $${!}; certbot renew; done'"
+
+volumes:
+  wall_db_data:
+    driver: local
+
+networks:
+  web:
+    driver: bridge

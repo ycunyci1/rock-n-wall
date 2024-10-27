@@ -7,11 +7,11 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
-      - ./docker/nginx/ssl:/etc/letsencrypt
-      - ./docker/nginx/ssl-data:/var/lib/letsencrypt
+      - ./docker/nginx/prod/conf.d:/etc/nginx/conf.d
+      - ./docker/nginx/prod/ssl:/etc/letsencrypt
+      - ./docker/nginx/prod/ssl-data:/var/lib/letsencrypt
       - ./:/var/www/html
-      - ./docker/nginx/logs/nginx:/var/log/nginx
+      - ./docker/nginx/prod/logs/nginx:/var/log/nginx
       - ./docker/socket:/socket
     container_name: wall_nginx
     depends_on:
@@ -22,7 +22,7 @@ services:
 
   app:
     build:
-      context: ./docker/app
+      context: ./docker/app/prod
       dockerfile: Dockerfile
     volumes:
       - ./:/var/www/html
@@ -35,7 +35,7 @@ services:
     restart: always
   scheduler:
     build:
-      context: ./docker/app
+      context: ./docker/app/prod
       dockerfile: Dockerfile
     command: /bin/sh -c "while :; do php /var/www/html/artisan schedule:run; sleep 60; done"
     volumes:

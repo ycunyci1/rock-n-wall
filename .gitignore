@@ -5,11 +5,13 @@
 /public/storage
 /storage/*.key
 /docker/mysql
-/docker/nginx/logs
+/docker/nginx/prod/logs
+/docker/nginx/dev/logs
 /storage/api-docs
 /resources/views/vendor/l5-swagger/.gitkeep
 /vendor
-/docker/nginx/ssl
+/docker/nginx/prod/ssl
+/docker/nginx/dev/ssl
 .env
 .env.backup
 .env.production
