@@ -12,7 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('backup:send')->everyFifteenMinutes();
+        if (config('app.env') === 'production') {
+            $schedule->command('backup:send')->everyFifteenMinutes();
+        }
         // $schedule->command('inspire')->hourly();
     }
 
