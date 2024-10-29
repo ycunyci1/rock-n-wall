@@ -4,20 +4,17 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "8080:80"
-      - "8443:443"
+      - "82:80"
     volumes:
       - ./docker/nginx/dev/conf.d:/etc/nginx/conf.d
-      - ./docker/nginx/dev/ssl:/etc/letsencrypt
-      - ./docker/nginx/dev/ssl-data:/var/lib/letsencrypt
       - ./:/var/www/html
       - ./docker/nginx/dev/logs/nginx:/var/log/nginx
       - ./docker/socket:/socket
-    container_name: wall_nginx_dev
+    container_name: wall_nginx_staging
     depends_on:
       - app
     networks:
-      - web
+      - web_staging
     restart: always
 
   app:
@@ -27,11 +24,11 @@ services:
     volumes:
       - ./:/var/www/html
       - ./docker/socket:/socket
-    container_name: wall_app_dev
+    container_name: wall_app_staging
     depends_on:
       - db
     networks:
-      - web
+      - web_staging
     restart: always
 
   scheduler:
@@ -44,22 +41,7 @@ services:
     depends_on:
       - app
     networks:
-      - web
-
-  db:
-    image: library/mariadb:11.4
-    volumes:
-      - wall_dev_db_data_dev:/var/lib/mysql
-    environment:
-      - MARIADB_USER=${DB_USERNAME}
-      - MARIADB_PASSWORD=${DB_PASSWORD}
-      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
-      - MARIADB_DATABASE=${DB_DATABASE}
-    ports:
-      - "3307:3306"
-    container_name: wall_db_dev
-    networks:
-      - web
+      - web_staging
 
   certbot:
     image: certbot/certbot
@@ -68,13 +50,27 @@ services:
       - ./docker/nginx/dev/ssl-data:/var/lib/letsencrypt
       - ./:/var/www/html
     networks:
-      - web
+      - web_staging
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 12h & wait $${!}; certbot renew; done'"
 
+  db:
+    image: library/mariadb:11.4
+    volumes:
+      - wall_db_data_staging:/var/lib/mysql
+    environment:
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB_DATABASE}
+    ports:
+      - "3307:3306"
+    container_name: wall_db_staging
+    networks:
+      - web_staging
 volumes:
-  wall_db_data_dev:
+  wall_db_data_staging:
     driver: local
 
 networks:
-  web:
+  web_staging:
     driver: bridge
