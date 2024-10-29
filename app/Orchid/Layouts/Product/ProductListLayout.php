@@ -63,7 +63,7 @@ class ProductListLayout extends Table
                 ->render(function (Product $product) {
                     $link = route('platform.product.edit', $product);
 
-                    return "<a href=$link><img src=$product->image width='150' height='150'></a>";
+                    return "<a href=$link><img src=$product->image height='150px' style='object-fit: contain;'></a>";
                 }),
             TD::make('new', 'Новинка')
                 ->width(50)

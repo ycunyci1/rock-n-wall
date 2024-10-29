@@ -4,8 +4,8 @@ services:
   nginx:
     image: nginx:latest
     ports:
-      - "80:80"
-      - "443:443"
+      - "81:80"
+      - "444:443"
     volumes:
       - ./docker/nginx/prod/conf.d:/etc/nginx/conf.d
       - ./docker/nginx/prod/ssl:/etc/letsencrypt
@@ -13,11 +13,11 @@ services:
       - ./:/var/www/html
       - ./docker/nginx/prod/logs/nginx:/var/log/nginx
       - ./docker/socket:/socket
-    container_name: wall_nginx
+    container_name: wall_nginx_prod
     depends_on:
       - app
     networks:
-      - web
+      - web_prod
     restart: always
 
   app:
@@ -27,12 +27,13 @@ services:
     volumes:
       - ./:/var/www/html
       - ./docker/socket:/socket
-    container_name: wall_app
+    container_name: wall_app_prod
     depends_on:
       - db
     networks:
-      - web
+      - web_prod
     restart: always
+
   scheduler:
     build:
       context: ./docker/app/prod
@@ -43,11 +44,12 @@ services:
     depends_on:
       - app
     networks:
-      - web
+      - web_prod
+
   db:
     image: library/mariadb:11.4
     volumes:
-      - wall_db_data:/var/lib/mysql
+      - wall_db_data_prod:/var/lib/mysql
     environment:
       - MARIADB_USER=${DB_USERNAME}
       - MARIADB_PASSWORD=${DB_PASSWORD}
@@ -55,9 +57,9 @@ services:
       - MARIADB_DATABASE=${DB_DATABASE}
     ports:
       - "3306:3306"
-    container_name: wall_db
+    container_name: wall_db_prod
     networks:
-      - web
+      - web_prod
 
   certbot:
     image: certbot/certbot
@@ -66,11 +68,13 @@ services:
       - ./docker/nginx/prod/ssl-data:/var/lib/letsencrypt
       - ./:/var/www/html
     networks:
-      - web
+      - web_prod
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 12h & wait $${!}; certbot renew; done'"
+
 volumes:
-  wall_db_data:
+  wall_db_data_prod:
     driver: local
+
 networks:
-  web:
+  web_prod:
     driver: bridge
