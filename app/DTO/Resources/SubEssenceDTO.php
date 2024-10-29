@@ -32,7 +32,7 @@ class SubEssenceDTO extends Data
         /**
          * @OA\Property(format="string", example="horizontal/vertical")
          */
-        public string $displayType,
+        public ?string $displayType,
 
         /**
          * @OA\Property(format="string", example="http://domain/storage/images/cats.jpg")
@@ -40,7 +40,6 @@ class SubEssenceDTO extends Data
         public ?string $image = null,
     )
     {
-        $this->displayType = $this->displayType == '0' ? EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL->value : EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL->value;
         $this->image = $this->image ? config('app.url') . $this->image : null;
     }
 }

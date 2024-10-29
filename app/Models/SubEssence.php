@@ -81,6 +81,6 @@ class SubEssence extends Model
 
     public function getDisplayTypeAttribute():string
     {
-        return $this->essence?->display_type;
+        return $this->essence?->name == 'Categories' ? \App\Enum\EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL->value : \App\Enum\EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL->value;
     }
 }

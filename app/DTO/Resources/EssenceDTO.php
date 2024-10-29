@@ -20,21 +20,14 @@ class EssenceDTO extends Data
          *
          * @OA\Property(format="string", example="123")
          */
-        public int $id,
+        public int      $id,
 
         /**
          * @var string
          *
          * @OA\Property(format="string", example="Animals")
          */
-        public string $name,
-
-        /**
-         * @var string
-         *
-         * @OA\Property(format="string", example="horizontal/vertical")
-         */
-        public string $displayType,
+        public string   $name,
 
         /**
          * @var array
@@ -46,9 +39,16 @@ class EssenceDTO extends Data
          * )
          */
         #[DataCollectionOf(SubEssenceDTO::class)]
-        public iterable $subEssences)
+        public iterable $subEssences,
+
+        /**
+         * @var string
+         *
+         * @OA\Property(format="string", example="horizontal/vertical")
+         */
+        public ?string  $displayType = null)
     {
         $this->subEssences = SubEssenceDTO::collect($this->subEssences->sortBy('sort')->values());
-        $this->displayType = $this->displayType == '0' ? EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL->value : EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL->value;;
+        $this->displayType = $this->name == 'Categories' ? EssenceDisplayTypeEnum::DISPLAY_TYPE_HORIZONTAL->value : EssenceDisplayTypeEnum::DISPLAY_TYPE_VERTICAL->value;;
     }
 }
