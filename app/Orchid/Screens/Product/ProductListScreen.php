@@ -25,6 +25,7 @@ class ProductListScreen extends Screen
                     \App\Orchid\Filters\ProductFilterLive::class,
                     \App\Orchid\Filters\ProductFilterNew::class,
                     \App\Orchid\Filters\ProductFilterPopular::class,
+                    \App\Orchid\Filters\ProductFilterSubEssence::class,
                     ])
                 ->orderByDesc('id')
                 ->paginate(15),

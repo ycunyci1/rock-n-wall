@@ -36,7 +36,7 @@ class FeedbackController extends BaseApiController
      *     ),
      *
      *     @OA\Response(
-     *          response=204,
+     *          response=201,
      *          description="Успешно добавлено",
      *     ),
      *     @OA\Response(
@@ -57,6 +57,6 @@ class FeedbackController extends BaseApiController
             'description' => 'nullable'
         ]);
         Feedback::query()->create($feedbackData);
-        return response()->json([], 204);
+        return response()->json(['message' => 'Успешно отправлено!'], 201);
     }
 }

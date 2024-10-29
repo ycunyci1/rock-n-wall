@@ -3,6 +3,7 @@
 namespace App\Orchid\Layouts\Product;
 
 use App\Models\Product;
+use App\Models\SubEssence;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
@@ -36,6 +37,15 @@ class ProductListLayout extends Table
                     return Link::make($product->name)
                         ->route('platform.product.edit', $product);
                 }),
+            TD::make('sub-essences', 'Категории')
+                ->width(250)
+                ->filter(Select::make()->fromModel(SubEssence::class, 'name', 'id')->multiple())
+                ->render(function (Product $product) {
+                    return Link::make($product->subEssences->count() ? implode(',', $product->subEssences->pluck('name')->toArray()) : '')
+                        ->route('platform.product.edit', $product);
+                    return ;
+                }),
+
             TD::make('vip', 'Vip')
                 ->width(50)
                 ->filter(Select::make()->options([
@@ -59,7 +69,7 @@ class ProductListLayout extends Table
                         ->route('platform.product.edit', $product);
                 }),
             TD::make('image', 'Изображение')
-                ->width(350)
+                ->width(150)
                 ->render(function (Product $product) {
                     $link = route('platform.product.edit', $product);
 
