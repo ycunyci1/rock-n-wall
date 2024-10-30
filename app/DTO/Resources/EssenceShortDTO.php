@@ -12,6 +12,12 @@ use Spatie\LaravelData\Data;
  */
 class EssenceShortDTO extends Data
 {
+    /**
+     * @var string
+     *
+     * @OA\Property(format="string", example="horizontal/vertical")
+     */
+    public string $displayType;
     public function __construct(
         /**
          * @var int
@@ -26,15 +32,8 @@ class EssenceShortDTO extends Data
          * @OA\Property(format="string", example="Animals")
          */
         public string $name,
-
-        /**
-         * @var string
-         *
-         * @OA\Property(format="string", example="horizontal/vertical")
-         */
-        public string $displayType,
     )
     {
-        $this->displayType = $this->displayType == '0' ? 'horizontal' : 'vertical';
+        $this->displayType = $this->name == 'Categories' ? 'horizontal' : 'vertical';
     }
 }
